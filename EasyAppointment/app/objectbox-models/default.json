@@ -1,0 +1,350 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:991850109661822419",
+      "lastPropertyId": "4:808028237247309625",
+      "name": "Account",
+      "properties": [
+        {
+          "id": "1:302757105012602340",
+          "name": "account_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:4138235113630976637",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "3:5840025566576242983",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:808028237247309625",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3128930604554437646",
+      "lastPropertyId": "8:8306110015055846163",
+      "name": "Client",
+      "properties": [
+        {
+          "id": "4:1990827551562243658",
+          "name": "client_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "7:288101511991146713",
+          "name": "accountId",
+          "indexId": "1:3616465775112714089",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Account"
+        },
+        {
+          "id": "8:8306110015055846163",
+          "name": "living_areaId",
+          "indexId": "10:1839030779192272798",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Living_Area"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:3460999874842013666",
+          "name": "appointments",
+          "targetId": "4:1042481061107603544"
+        }
+      ]
+    },
+    {
+      "id": "3:8792050401475884810",
+      "lastPropertyId": "9:5944938472941483067",
+      "name": "Provider",
+      "properties": [
+        {
+          "id": "4:3919729571333175495",
+          "name": "provider_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "6:7721374343865356150",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "7:4023443950672878816",
+          "name": "telephone",
+          "type": 9
+        },
+        {
+          "id": "8:5798009199650472985",
+          "name": "accountId",
+          "indexId": "2:5606815060030530194",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Account"
+        },
+        {
+          "id": "9:5944938472941483067",
+          "name": "categoryId",
+          "indexId": "3:558237827589349105",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Category"
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:4223071751092554608",
+          "name": "services",
+          "targetId": "6:6095688778603077402"
+        },
+        {
+          "id": "3:608984181681110964",
+          "name": "schedules",
+          "targetId": "7:262042188890954323"
+        }
+      ]
+    },
+    {
+      "id": "4:1042481061107603544",
+      "lastPropertyId": "6:1884402811323292543",
+      "name": "Appointments",
+      "properties": [
+        {
+          "id": "1:8488385154885556534",
+          "name": "appointments_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:9146113481092459781",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "3:875418729746066652",
+          "name": "start_time",
+          "type": 9
+        },
+        {
+          "id": "4:6370904175054770807",
+          "name": "end_time",
+          "type": 9
+        },
+        {
+          "id": "5:6626618873513019411",
+          "name": "clientId",
+          "indexId": "4:341071342378837524",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Client"
+        },
+        {
+          "id": "6:1884402811323292543",
+          "name": "provider_serviceId",
+          "indexId": "5:8886176097959371122",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Provider_Service"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:2067093296733653649",
+      "lastPropertyId": "2:8133754754993676051",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:886641154425093326",
+          "name": "category_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:8133754754993676051",
+          "name": "category_name",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "4:7823874530957127350",
+          "name": "providers",
+          "targetId": "3:8792050401475884810"
+        }
+      ]
+    },
+    {
+      "id": "6:6095688778603077402",
+      "lastPropertyId": "3:4084394122668999537",
+      "name": "Provider_Service",
+      "properties": [
+        {
+          "id": "1:8883918093311009135",
+          "name": "provider_service_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:6602652129221269265",
+          "name": "serviceId",
+          "indexId": "6:6432067001182895813",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Service"
+        },
+        {
+          "id": "3:4084394122668999537",
+          "name": "providerId",
+          "indexId": "7:5524770839167443611",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Provider"
+        }
+      ],
+      "relations": [
+        {
+          "id": "5:5469836349613724033",
+          "name": "appointments",
+          "targetId": "4:1042481061107603544"
+        }
+      ]
+    },
+    {
+      "id": "7:262042188890954323",
+      "lastPropertyId": "5:600860477478218335",
+      "name": "Schedules",
+      "properties": [
+        {
+          "id": "1:3786357861958830240",
+          "name": "schedule_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:3177081745346586894",
+          "name": "weekDay",
+          "type": 9
+        },
+        {
+          "id": "3:4280838971653402645",
+          "name": "start_time",
+          "type": 9
+        },
+        {
+          "id": "4:3442719122942298613",
+          "name": "end_time",
+          "type": 9
+        },
+        {
+          "id": "5:600860477478218335",
+          "name": "providerId",
+          "indexId": "8:1828367940048924370",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Provider"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:4320142652104654531",
+      "lastPropertyId": "5:7548784985868500501",
+      "name": "Service",
+      "properties": [
+        {
+          "id": "1:6176980636470345058",
+          "name": "id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:4902855781036733511",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7696487997048524754",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:6942170077276478977",
+          "name": "duration",
+          "type": 5,
+          "flags": 2
+        },
+        {
+          "id": "5:7548784985868500501",
+          "name": "provider_serviceId",
+          "indexId": "9:4722995458911246974",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Provider_Service"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:7238188445166308745",
+      "lastPropertyId": "2:3144091156565272004",
+      "name": "Living_Area",
+      "properties": [
+        {
+          "id": "1:7723110941208675275",
+          "name": "living_area_id",
+          "type": 6,
+          "flags": 3
+        },
+        {
+          "id": "2:3144091156565272004",
+          "name": "living_area",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "6:6069462589230801802",
+          "name": "clients",
+          "targetId": "2:3128930604554437646"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "9:7238188445166308745",
+  "lastIndexId": "10:1839030779192272798",
+  "lastRelationId": "6:6069462589230801802",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    6385101737651194643,
+    3709442253357195781,
+    3671609148659214269,
+    5340428502148024489,
+    4900997899357251752,
+    2619458803380799438,
+    2031777774208362855,
+    9160676005211061321,
+    4983295131361654035
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
