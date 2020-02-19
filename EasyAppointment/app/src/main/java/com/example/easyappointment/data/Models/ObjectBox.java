@@ -1,4 +1,4 @@
-package com.example.easyappointment.data.model;
+package com.example.easyappointment.data.Models;
 
 import android.content.Context;
 

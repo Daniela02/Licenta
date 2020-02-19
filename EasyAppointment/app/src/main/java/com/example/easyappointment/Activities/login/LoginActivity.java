@@ -1,9 +1,8 @@
-package com.example.easyappointment.ui.login;
+package com.example.easyappointment.Activities.login;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -11,11 +10,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easyappointment.R;
-import com.example.easyappointment.data.model.ObjectBox;
-import com.example.easyappointment.data.model.accounts.Account;
-import com.example.easyappointment.data.model.accounts.Account_;
-import com.example.easyappointment.ui.createNewAccount.ChooseType;
-import com.example.easyappointment.ui.profile.ProfileActivity;
+import com.example.easyappointment.data.Models.ObjectBox;
+import com.example.easyappointment.data.Models.accounts.Account;
+import com.example.easyappointment.data.Models.accounts.Account_;
+import com.example.easyappointment.Activities.createNewAccount.ChooseTypeActivity;
+import com.example.easyappointment.Activities.profile.ProfileActivity;
+import com.example.easyappointment.data.Models.accounts.Client;
+import com.example.easyappointment.data.Models.accounts.Provider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -45,6 +46,11 @@ public class LoginActivity extends AppCompatActivity {
 
         final GoogleSignInClient googleSignInClient;
         final SignInButton googleSignInButton;
+
+        //TODO delete
+        ObjectBox.get().boxFor(Account.class).removeAll();
+        ObjectBox.get().boxFor(Client.class).removeAll();
+        ObjectBox.get().boxFor(Provider.class).removeAll();
 
         //Google Sign in Button
 
@@ -93,9 +99,9 @@ public class LoginActivity extends AppCompatActivity {
 
         //create new account
         if(findEmail.isEmpty()){
-            Intent clientOrProviderIntent = new Intent(this, ChooseType.class);
-            clientOrProviderIntent.putExtra(ChooseType.ACCOUNT_EMAIL, email);
-            clientOrProviderIntent.putExtra(ChooseType.ACCOUNT_NAME, name);
+            Intent clientOrProviderIntent = new Intent(this, ChooseTypeActivity.class);
+            clientOrProviderIntent.putExtra(ChooseTypeActivity.ACCOUNT_EMAIL, email);
+            clientOrProviderIntent.putExtra(ChooseTypeActivity.ACCOUNT_NAME, name);
             startActivity(clientOrProviderIntent);
             finish();
         }

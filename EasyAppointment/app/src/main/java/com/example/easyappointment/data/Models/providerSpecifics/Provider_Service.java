@@ -1,7 +1,7 @@
-package com.example.easyappointment.data.model.provider;
+package com.example.easyappointment.data.Models.providerSpecifics;
 
-import com.example.easyappointment.data.model.Appointments;
-import com.example.easyappointment.data.model.accounts.Provider;
+import com.example.easyappointment.data.Models.Appointments;
+import com.example.easyappointment.data.Models.accounts.Provider;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;

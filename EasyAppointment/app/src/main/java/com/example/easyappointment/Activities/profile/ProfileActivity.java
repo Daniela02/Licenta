@@ -1,4 +1,4 @@
-package com.example.easyappointment.ui.profile;
+package com.example.easyappointment.Activities.profile;
 
 import android.Manifest.permission;
 import android.content.ContentResolver;
@@ -24,7 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.easyappointment.R;
-import com.example.easyappointment.ui.login.LoginActivity;
+import com.example.easyappointment.Activities.login.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -32,17 +32,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String GOOGLE_ACCOUNT = "google_account";
     private static final String  SIGN_OUT = "sign_out";
     public static final int MY_PERMISSION_READ_CALENDAR = 1;
     public static final int MY_PERMISSION_WRITE_CALENDAR = 2;
-    private final String NAME = "NAME";
-    private final String EMAIL = "EMAIL";
+    public static final String NAME = "NAME";
+    public static final String EMAIL = "EMAIL";
     private TextView profileName, profileEmail;
     private ImageView profileImage;
     private Button signOut;

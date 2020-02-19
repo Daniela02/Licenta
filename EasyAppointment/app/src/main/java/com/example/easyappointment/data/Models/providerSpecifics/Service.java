@@ -1,4 +1,4 @@
-package com.example.easyappointment.data.model.provider;
+package com.example.easyappointment.data.Models.providerSpecifics;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;

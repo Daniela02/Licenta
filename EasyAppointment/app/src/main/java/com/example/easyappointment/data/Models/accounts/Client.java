@@ -1,7 +1,6 @@
-package com.example.easyappointment.data.model.accounts;
+package com.example.easyappointment.data.Models.accounts;
 
-import com.example.easyappointment.data.model.Appointments;
-import com.example.easyappointment.data.model.client.Living_Area;
+import com.example.easyappointment.data.Models.Appointments;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
@@ -12,7 +11,6 @@ import io.objectbox.relation.ToOne;
 public class Client {
     @Id public Long client_id;
     public ToOne<Account> account;
-    public ToOne<Living_Area> living_area;
     public ToMany<Appointments> appointments;
 
     public Client() {}
@@ -23,14 +21,6 @@ public class Client {
 
     public void setAccount(ToOne<Account> account) {
         this.account = account;
-    }
-
-    public ToOne<Living_Area> getLiving_area() {
-        return living_area;
-    }
-
-    public void setLiving_area(ToOne<Living_Area> living_area) {
-        this.living_area = living_area;
     }
 
     public ToMany<Appointments> getAppointments() {
@@ -45,7 +35,6 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "account=" + account +
-                ", living_area=" + living_area +
                 ", appointments=" + appointments +
                 '}';
     }
