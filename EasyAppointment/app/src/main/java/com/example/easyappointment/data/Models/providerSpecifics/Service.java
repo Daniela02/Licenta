@@ -2,6 +2,7 @@ package com.example.easyappointment.data.Models.providerSpecifics;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Uid;
 import io.objectbox.relation.ToOne;
 
 @Entity
@@ -10,9 +11,10 @@ public class Service {
     public ToOne<Provider_Service> provider_service;
     public String name;
     public String description;
-    public Integer duration; //milliseconds
+    @Uid(3971746293054693494L)
+    public String duration; //minutes
 
-    public Service(String name, String description, Integer duration) {
+    public Service(String name, String description, String duration) {
         this.name = name;
         this.description = description;
         this.duration = duration;
@@ -42,11 +44,11 @@ public class Service {
         this.description = description;
     }
 
-    public Integer getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

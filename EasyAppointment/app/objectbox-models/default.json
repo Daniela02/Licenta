@@ -50,14 +50,6 @@
           "type": 11,
           "flags": 1548,
           "relationTarget": "Account"
-        },
-        {
-          "id": "8:8306110015055846163",
-          "name": "living_areaId",
-          "indexId": "10:1839030779192272798",
-          "type": 11,
-          "flags": 1548,
-          "relationTarget": "Living_Area"
         }
       ],
       "relations": [
@@ -264,7 +256,7 @@
     },
     {
       "id": "8:4320142652104654531",
-      "lastPropertyId": "5:7548784985868500501",
+      "lastPropertyId": "6:3971746293054693494",
       "name": "Service",
       "properties": [
         {
@@ -284,46 +276,20 @@
           "type": 9
         },
         {
-          "id": "4:6942170077276478977",
-          "name": "duration",
-          "type": 5,
-          "flags": 2
-        },
-        {
           "id": "5:7548784985868500501",
           "name": "provider_serviceId",
           "indexId": "9:4722995458911246974",
           "type": 11,
           "flags": 1548,
           "relationTarget": "Provider_Service"
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "9:7238188445166308745",
-      "lastPropertyId": "2:3144091156565272004",
-      "name": "Living_Area",
-      "properties": [
-        {
-          "id": "1:7723110941208675275",
-          "name": "living_area_id",
-          "type": 6,
-          "flags": 3
         },
         {
-          "id": "2:3144091156565272004",
-          "name": "living_area",
+          "id": "6:3971746293054693494",
+          "name": "duration",
           "type": 9
         }
       ],
-      "relations": [
-        {
-          "id": "6:6069462589230801802",
-          "name": "clients",
-          "targetId": "2:3128930604554437646"
-        }
-      ]
+      "relations": []
     }
   ],
   "lastEntityId": "9:7238188445166308745",
@@ -332,8 +298,12 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
+  "retiredEntityUids": [
+    7238188445166308745
+  ],
+  "retiredIndexUids": [
+    1839030779192272798
+  ],
   "retiredPropertyUids": [
     6385101737651194643,
     3709442253357195781,
@@ -343,8 +313,14 @@
     2619458803380799438,
     2031777774208362855,
     9160676005211061321,
-    4983295131361654035
+    4983295131361654035,
+    7723110941208675275,
+    3144091156565272004,
+    8306110015055846163,
+    6942170077276478977
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    6069462589230801802
+  ],
   "version": 1
 }

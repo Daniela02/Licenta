@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:991850109661822419",
-      "lastPropertyId": "3:5840025566576242983",
+      "lastPropertyId": "4:808028237247309625",
       "name": "Account",
       "properties": [
         {
@@ -23,6 +23,11 @@
           "id": "3:5840025566576242983",
           "name": "type",
           "type": 9
+        },
+        {
+          "id": "4:808028237247309625",
+          "name": "name",
+          "type": 9
         }
       ],
       "relations": []
@@ -39,25 +44,12 @@
           "flags": 3
         },
         {
-          "id": "5:4983295131361654035",
-          "name": "client_name",
-          "type": 9
-        },
-        {
           "id": "7:288101511991146713",
           "name": "accountId",
           "indexId": "1:3616465775112714089",
           "type": 11,
           "flags": 1548,
           "relationTarget": "Account"
-        },
-        {
-          "id": "8:8306110015055846163",
-          "name": "living_areaId",
-          "indexId": "10:1839030779192272798",
-          "type": 11,
-          "flags": 1548,
-          "relationTarget": "Living_Area"
         }
       ],
       "relations": [
@@ -78,11 +70,6 @@
           "name": "provider_id",
           "type": 6,
           "flags": 3
-        },
-        {
-          "id": "5:9160676005211061321",
-          "name": "provider_name",
-          "type": 9
         },
         {
           "id": "6:7721374343865356150",
@@ -291,8 +278,7 @@
         {
           "id": "4:6942170077276478977",
           "name": "duration",
-          "type": 5,
-          "flags": 2
+          "type": 9
         },
         {
           "id": "5:7548784985868500501",
@@ -304,31 +290,6 @@
         }
       ],
       "relations": []
-    },
-    {
-      "id": "9:7238188445166308745",
-      "lastPropertyId": "2:3144091156565272004",
-      "name": "Living_Area",
-      "properties": [
-        {
-          "id": "1:7723110941208675275",
-          "name": "living_area_id",
-          "type": 6,
-          "flags": 3
-        },
-        {
-          "id": "2:3144091156565272004",
-          "name": "living_area",
-          "type": 9
-        }
-      ],
-      "relations": [
-        {
-          "id": "6:6069462589230801802",
-          "name": "clients",
-          "targetId": "2:3128930604554437646"
-        }
-      ]
     }
   ],
   "lastEntityId": "9:7238188445166308745",
@@ -337,8 +298,15 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
+  "newUidPool": [
+    3971746293054693494
+  ],
+  "retiredEntityUids": [
+    7238188445166308745
+  ],
+  "retiredIndexUids": [
+    1839030779192272798
+  ],
   "retiredPropertyUids": [
     6385101737651194643,
     3709442253357195781,
@@ -346,8 +314,15 @@
     5340428502148024489,
     4900997899357251752,
     2619458803380799438,
-    2031777774208362855
+    2031777774208362855,
+    9160676005211061321,
+    4983295131361654035,
+    7723110941208675275,
+    3144091156565272004,
+    8306110015055846163
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    6069462589230801802
+  ],
   "version": 1
 }

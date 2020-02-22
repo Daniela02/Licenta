@@ -9,14 +9,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.easyappointment.Activities.createNewAccount.ChooseTypeActivity;
+import com.example.easyappointment.Activities.profile.ProfileActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Account;
 import com.example.easyappointment.data.Models.accounts.Account_;
-import com.example.easyappointment.Activities.createNewAccount.ChooseTypeActivity;
-import com.example.easyappointment.Activities.profile.ProfileActivity;
-import com.example.easyappointment.data.Models.accounts.Client;
-import com.example.easyappointment.data.Models.accounts.Provider;
+import com.example.easyappointment.data.Models.providerSpecifics.Category;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -47,10 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         final GoogleSignInClient googleSignInClient;
         final SignInButton googleSignInButton;
 
-        //TODO delete
-        ObjectBox.get().boxFor(Account.class).removeAll();
-        ObjectBox.get().boxFor(Client.class).removeAll();
-        ObjectBox.get().boxFor(Provider.class).removeAll();
+        if (ObjectBox.get().boxFor(Category.class).isEmpty()) {
+            categoriesInit();
+        }
 
         //Google Sign in Button
 
@@ -94,8 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         String name =  googleSignInAccount.getDisplayName();
         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
         List<Account> findEmail = accountBox.query().equal(Account_.email, email).build().find();
-        //TODO Delete removeAll
-        accountBox.removeAll();
 
         //create new account
         if(findEmail.isEmpty()){
@@ -107,8 +103,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra(ProfileActivity.GOOGLE_ACCOUNT, googleSignInAccount);
-
+            intent.putExtra(ProfileActivity.NAME, name);
+            intent.putExtra(ProfileActivity.EMAIL, email);
             startActivity(intent);
             finish();
         }
@@ -124,6 +120,14 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "Not logged in");
         }
+    }
+
+    public void categoriesInit() {
+        Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
+        categoryBox.put(new Category("Auto Service"));
+        categoryBox.put(new Category("Women Beauty Salons"));
+        categoryBox.put(new Category("Doctors"));
+        categoryBox.put(new Category("Barber Shops"));
     }
 
 }
