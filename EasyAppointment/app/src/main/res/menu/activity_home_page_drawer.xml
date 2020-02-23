@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_change_personal_details"
+            android:title="Edit Personal Details" />
+        <item
+            android:id="@+id/nav_appointments"
+            android:title="Appointments" />
+        <item
+            android:id="@+id/nav_future_appointments"
+            android:title="Future Appointments" />
+        <item
+            android:id="@+id/nav_services"
+            android:title="Services" />
+        <item
+            android:id="@+id/nav_change_category"
+            android:title="Change Category" />
+        <item
+            android:id="@+id/nav_change_schedule"
+            android:title="Edit Daily Schedule" />
+    </group>
+
+    <item
+        android:id="@+id/nav_signout"
+        android:title="Sign Out" />
+
+
+</menu>

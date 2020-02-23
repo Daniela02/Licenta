@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -30,6 +31,10 @@ public class SelectCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_category, container, false);
         dropDownCategory = view.findViewById(R.id.categorySpinner);
+
+        if (getActivity().getClass().getSimpleName().contains("HomePageActivity")) {
+            ((TextView) view.findViewById(R.id.categoryTextView)).setVisibility(View.GONE);
+        }
 
         Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
         String[] items = categoryBox.query().build().property(Category_.category_name).distinct().findStrings();

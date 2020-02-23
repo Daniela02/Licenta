@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easyappointment.Activities.createNewAccount.ChooseTypeActivity;
-import com.example.easyappointment.Activities.profile.ProfileActivity;
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Account;
@@ -92,8 +92,9 @@ public class LoginActivity extends AppCompatActivity {
         String name =  googleSignInAccount.getDisplayName();
         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
         List<Account> findEmail = accountBox.query().equal(Account_.email, email).build().find();
+        //TODO delete
+        Log.d("Conturi", accountBox.getAll().toString());
 
-        //create new account
         if(findEmail.isEmpty()){
             Intent clientOrProviderIntent = new Intent(this, ChooseTypeActivity.class);
             clientOrProviderIntent.putExtra(ChooseTypeActivity.ACCOUNT_EMAIL, email);
@@ -102,9 +103,9 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
         else {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra(ProfileActivity.NAME, name);
-            intent.putExtra(ProfileActivity.EMAIL, email);
+            Intent intent = new Intent(this, HomePageActivity.class);
+            intent.putExtra(HomePageActivity.NAME, name);
+            intent.putExtra(HomePageActivity.EMAIL, email);
             startActivity(intent);
             finish();
         }

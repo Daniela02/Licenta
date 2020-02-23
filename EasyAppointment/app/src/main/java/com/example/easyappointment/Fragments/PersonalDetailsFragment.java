@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,6 +22,9 @@ public class PersonalDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_personal_details,
                 container, false);
+        if (getActivity().getClass().getSimpleName().contains("HomePageActivity")) {
+            ((TextView) view.findViewById(R.id.personalDetailsTextView)).setVisibility(View.GONE);
+        }
 
         return view;
     }
