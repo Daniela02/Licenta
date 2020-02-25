@@ -15,7 +15,12 @@ import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Account;
 import com.example.easyappointment.data.Models.accounts.Account_;
+import com.example.easyappointment.data.Models.accounts.Client;
+import com.example.easyappointment.data.Models.accounts.Provider;
 import com.example.easyappointment.data.Models.providerSpecifics.Category;
+import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
+import com.example.easyappointment.data.Models.providerSpecifics.Schedules;
+import com.example.easyappointment.data.Models.providerSpecifics.Service;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -45,6 +50,24 @@ public class LoginActivity extends AppCompatActivity {
 
         final GoogleSignInClient googleSignInClient;
         final SignInButton googleSignInButton;
+
+        //TODO DELETE
+//        ObjectBox.get().boxFor(Account.class).removeAll();
+//        ObjectBox.get().boxFor(Provider.class).removeAll();
+//        ObjectBox.get().boxFor(Client.class).removeAll();
+//        ObjectBox.get().boxFor(Schedules.class).removeAll();
+//        ObjectBox.get().boxFor(Category.class).removeAll();
+//        ObjectBox.get().boxFor(Provider_Service.class).removeAll();
+//        ObjectBox.get().boxFor(Service.class).removeAll();
+
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Account.class).getAll().toString());
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Provider.class).getAll().toString());
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Client.class).getAll().toString());
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Schedules.class).getAll().toString());
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Category.class).getAll().toString());
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Provider_Service.class).getAll().toString());
+        Log.d("Verificare bd", ObjectBox.get().boxFor(Service.class).getAll().toString());
+
 
         if (ObjectBox.get().boxFor(Category.class).isEmpty()) {
             categoriesInit();
@@ -93,7 +116,9 @@ public class LoginActivity extends AppCompatActivity {
         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
         List<Account> findEmail = accountBox.query().equal(Account_.email, email).build().find();
         //TODO delete
+        Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
         Log.d("Conturi", accountBox.getAll().toString());
+        Log.d("Providers no:", String.valueOf(providerBox.count()));
 
         if(findEmail.isEmpty()){
             Intent clientOrProviderIntent = new Intent(this, ChooseTypeActivity.class);
@@ -114,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
+
         GoogleSignInAccount alreadyloggedAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (alreadyloggedAccount != null) {
             Toast.makeText(this, "Already Logged In", Toast.LENGTH_SHORT).show();

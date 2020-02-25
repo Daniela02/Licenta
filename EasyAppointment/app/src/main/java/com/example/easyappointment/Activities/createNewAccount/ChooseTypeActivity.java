@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easyappointment.Activities.createNewAccount.asProvider.CustomizeProviderActivity;
-import com.example.easyappointment.Activities.profile.ProfileActivity;
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Account;
@@ -42,19 +42,22 @@ public class ChooseTypeActivity extends AppCompatActivity {
                 account.setType("Client");
 
                 Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
-                accountBox.removeAll();
+
                 accountBox.put(account);
                 //CREATING THE NEW CLIENT
 
-                Client client = new Client();
-                client.account.setTarget(account);
                 Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
+                Client client = new Client();
+                clientBox.attach(client);
+                client.account.setTarget(account);
+
                 clientBox.put(client);
+                long var = clientBox.query().build().findFirst().account.getTargetId();
 
                 //profile activity
-                Intent homeIntent = new Intent(ChooseTypeActivity.this, ProfileActivity.class);
-                homeIntent.putExtra(ProfileActivity.EMAIL, email);
-                homeIntent.putExtra(ProfileActivity.NAME, name);
+                Intent homeIntent = new Intent(ChooseTypeActivity.this, HomePageActivity.class);
+                homeIntent.putExtra(HomePageActivity.EMAIL, email);
+                homeIntent.putExtra(HomePageActivity.NAME, name);
                 startActivity(homeIntent);
                 finish();
             }

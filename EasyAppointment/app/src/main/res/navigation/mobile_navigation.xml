@@ -7,50 +7,60 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.easyappointment.Fragments.HomeFragment"
+        android:name="com.example.easyappointment.Fragments.Common.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_provider_add_service"
+            app:destination="@id/provider_add_service" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_change_personal_details"
-        android:name="com.example.easyappointment.Fragments.PersonalDetailsFragment"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.PersonalDetailsFragment"
         android:label="Edit Personal Details"
         tools:layout="@layout/fragment_personal_details" />
 
     <fragment
         android:id="@+id/nav_future_appointments"
-        android:name="com.example.easyappointment.Fragments.FutureAppointmentsFragment"
+        android:name="com.example.easyappointment.Fragments.Common.FutureAppointmentsFragment"
         android:label="Future Appointments"
         tools:layout="@layout/fragment_future_appointments" />
 
     <fragment
         android:id="@+id/nav_appointments"
-        android:name="com.example.easyappointment.Fragments.AppointmentsFragment"
+        android:name="com.example.easyappointment.Fragments.Common.AppointmentsFragment"
         android:label="Appointments"
         tools:layout="@layout/fragment_appointments" />
 
     <fragment
         android:id="@+id/nav_services"
-        android:name="com.example.easyappointment.Fragments.ServicesFragment"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.ServicesFragment"
         android:label="Services"
         tools:layout="@layout/fragment_services" />
 
     <fragment
         android:id="@+id/nav_change_category"
-        android:name="com.example.easyappointment.Fragments.SelectCategoryFragment"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.SelectCategoryFragment"
         android:label="Change Category"
         tools:layout="@layout/fragment_select_category" />
 
     <fragment
         android:id="@+id/nav_change_schedule"
-        android:name="com.example.easyappointment.Fragments.ProviderSetScheduleFragment"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.ProviderSetScheduleFragment"
         android:label="Daily Schedule"
         tools:layout="@layout/fragment_provider_set_schedule" />
 
     <fragment
         android:id="@+id/nav_signout"
-        android:name="com.example.easyappointment.Fragments.SignOutFragment"
+        android:name="com.example.easyappointment.Fragments.Common.SignOutFragment"
         android:label="Sign Out"
         tools:layout="@layout/fragment_sign_out" />
+
+    <fragment
+        android:id="@+id/provider_add_service"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.AddServiceFragment"
+        android:label="New Service"
+        tools:layout="@layout/fragment_add_service" />
 
 </navigation>

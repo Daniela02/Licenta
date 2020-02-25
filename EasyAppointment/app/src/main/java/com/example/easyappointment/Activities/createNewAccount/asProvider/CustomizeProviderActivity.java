@@ -11,16 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.easyappointment.Activities.profile.ProfileActivity;
-import com.example.easyappointment.Fragments.AddServiceFragment;
-import com.example.easyappointment.Fragments.PersonalDetailsFragment;
-import com.example.easyappointment.Fragments.ProviderSetScheduleFragment;
-import com.example.easyappointment.Fragments.SelectCategoryFragment;
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
+import com.example.easyappointment.Fragments.ProviderSpecific.AddServiceFragment;
+import com.example.easyappointment.Fragments.ProviderSpecific.PersonalDetailsFragment;
+import com.example.easyappointment.Fragments.ProviderSpecific.ProviderSetScheduleFragment;
+import com.example.easyappointment.Fragments.ProviderSpecific.SelectCategoryFragment;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Account;
 import com.example.easyappointment.data.Models.accounts.Provider;
 import com.example.easyappointment.data.Models.providerSpecifics.Category;
+import com.example.easyappointment.data.Models.providerSpecifics.Category_;
 import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
 import com.example.easyappointment.data.Models.providerSpecifics.Schedules;
 import com.example.easyappointment.data.Models.providerSpecifics.Service;
@@ -108,37 +109,42 @@ public class CustomizeProviderActivity extends AppCompatActivity {
                         account = new Account(email, name);
                         account.setType("Provider");
                         provider = new Provider(address, phone);
-                        provider.account.setTarget(account);
+                        Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
+                        providerBox.attach(provider);
 
                         //CATEGORY
                         String selectedCategory = ((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem().toString();
-                        Category category = new Category(selectedCategory);
-                        provider.category.setTarget(category);
 
                         //SCHEDULES
+                        Box<Schedules> schedulesBox = ObjectBox.get().boxFor(Schedules.class);
                         String startTime = ((EditText) findViewById(R.id.monStartTime)).getText().toString();
                         String endTime = ((EditText) findViewById(R.id.monEndTime)).getText().toString();
                         Schedules monday = new Schedules("Monday", startTime, endTime);
+                        schedulesBox.attach(monday);
                         provider.schedules.add(monday);
 
                         startTime = ((EditText) findViewById(R.id.tuesStartTime)).getText().toString();
                         endTime = ((EditText) findViewById(R.id.tuesEndTime)).getText().toString();
                         Schedules tuesday = new Schedules("Tuesday", startTime, endTime);
+                        schedulesBox.attach(tuesday);
                         provider.schedules.add(tuesday);
 
                         startTime = ((EditText) findViewById(R.id.wedStartTime)).getText().toString();
                         endTime = ((EditText) findViewById(R.id.wedEndTime)).getText().toString();
                         Schedules wednesday = new Schedules("Wednesay", startTime, endTime);
+                        schedulesBox.attach(wednesday);
                         provider.schedules.add(wednesday);
 
                         startTime = ((EditText) findViewById(R.id.thursStartTime)).getText().toString();
                         endTime = ((EditText) findViewById(R.id.thursEndTime)).getText().toString();
                         Schedules thursday = new Schedules("Thursday", startTime, endTime);
+                        schedulesBox.attach(thursday);
                         provider.schedules.add(thursday);
 
                         startTime = ((EditText) findViewById(R.id.friStartTime)).getText().toString();
                         endTime = ((EditText) findViewById(R.id.friEndTime)).getText().toString();
                         Schedules friday = new Schedules("Friday", startTime, endTime);
+                        schedulesBox.attach(friday);
                         provider.schedules.add(friday);
 
                         //SERVICE
@@ -146,11 +152,17 @@ public class CustomizeProviderActivity extends AppCompatActivity {
                         String serviceDescription = ((EditText) findViewById(R.id.addServiceDescription)).getText().toString();
                         String serviceDuration = ((EditText) findViewById(R.id.addServiceDuration)).getText().toString();
 
+                        Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);
+                        Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
+
                         Service service = new Service(serviceName, serviceDescription, serviceDuration);
+                        serviceBox.attach(service);
                         Provider_Service provider_service = new Provider_Service();
+                        provider_serviceBox.attach(provider_service);
+                        service.provider_service.setTarget(provider_service);
                         provider_service.provider.setTarget(provider);
                         provider_service.service.setTarget(service);
-                        provider.services.add(provider_service);
+                        provider.provider_services.add(provider_service);
 
 
                         //CREATE ACCOUNT, PROVIDER AND DEPENDENCIES
@@ -158,25 +170,28 @@ public class CustomizeProviderActivity extends AppCompatActivity {
                         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
                         accountBox.put(account);
 
-                        Box<Schedules> schedulesBox = ObjectBox.get().boxFor(Schedules.class);
                         schedulesBox.put(monday);
                         schedulesBox.put(tuesday);
                         schedulesBox.put(wednesday);
                         schedulesBox.put(thursday);
                         schedulesBox.put(friday);
 
-                        Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
+
                         serviceBox.put(service);
 
-                        Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);
+
                         provider_serviceBox.put(provider_service);
 
-                        Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
+                        Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
+                        Category category = categoryBox.query().equal(Category_.category_name, selectedCategory).build().findFirst();
+                        category.providers.add(provider);
+                        provider.account.setTarget(account);
+                        provider.category.setTarget(category);
                         providerBox.put(provider);
 
-                        Intent homeIntent = new Intent(CustomizeProviderActivity.this, ProfileActivity.class);
-                        homeIntent.putExtra(ProfileActivity.EMAIL, email);
-                        homeIntent.putExtra(ProfileActivity.NAME, name);
+                        Intent homeIntent = new Intent(CustomizeProviderActivity.this, HomePageActivity.class);
+                        homeIntent.putExtra(HomePageActivity.EMAIL, email);
+                        homeIntent.putExtra(HomePageActivity.NAME, name);
                         startActivity(homeIntent);
                         finish();
                         break;

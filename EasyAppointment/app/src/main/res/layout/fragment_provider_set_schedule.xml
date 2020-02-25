@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ProviderSetScheduleFragment">
+    tools:context=".Fragments.ProviderSpecific.ProviderSetScheduleFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -194,7 +194,16 @@
             android:hint="End Time"
             android:inputType="time" />
 
+        <Button
+            android:id="@+id/submit_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friEndTime"
+            android:layout_marginTop="15dp"
+            android:text="Submit"
+            android:visibility="gone" />
+
     </RelativeLayout>
-    >
+
 
 </FrameLayout>

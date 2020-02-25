@@ -14,6 +14,9 @@ public class Service {
     @Uid(3971746293054693494L)
     public String duration; //minutes
 
+    public Service() {
+    }
+
     public Service(String name, String description, String duration) {
         this.name = name;
         this.description = description;
@@ -56,7 +59,7 @@ public class Service {
     public String toString() {
         return "Service{" +
                 "provider_service=" + provider_service +
-                ", client_name='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", duration=" + duration +
                 '}';

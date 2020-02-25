@@ -12,6 +12,9 @@ public class Category {
     public ToMany<Provider> providers;
     public String category_name;
 
+    public Category() {
+    }
+
     public Category(String category_name) {
         this.category_name = category_name;
     }
@@ -36,7 +39,7 @@ public class Category {
     public String toString() {
         return "Category{" +
                 "providers=" + providers +
-                ", client_name='" + category_name + '\'' +
+                ", category_name='" + category_name + '\'' +
                 '}';
     }
 }

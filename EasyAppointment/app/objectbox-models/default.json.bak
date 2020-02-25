@@ -256,7 +256,7 @@
     },
     {
       "id": "8:4320142652104654531",
-      "lastPropertyId": "5:7548784985868500501",
+      "lastPropertyId": "6:3971746293054693494",
       "name": "Service",
       "properties": [
         {
@@ -276,17 +276,17 @@
           "type": 9
         },
         {
-          "id": "4:6942170077276478977",
-          "name": "duration",
-          "type": 9
-        },
-        {
           "id": "5:7548784985868500501",
           "name": "provider_serviceId",
           "indexId": "9:4722995458911246974",
           "type": 11,
           "flags": 1548,
           "relationTarget": "Provider_Service"
+        },
+        {
+          "id": "6:3971746293054693494",
+          "name": "duration",
+          "type": 9
         }
       ],
       "relations": []
@@ -298,9 +298,6 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "newUidPool": [
-    3971746293054693494
-  ],
   "retiredEntityUids": [
     7238188445166308745
   ],
@@ -319,7 +316,8 @@
     4983295131361654035,
     7723110941208675275,
     3144091156565272004,
-    8306110015055846163
+    8306110015055846163,
+    6942170077276478977
   ],
   "retiredRelationUids": [
     6069462589230801802

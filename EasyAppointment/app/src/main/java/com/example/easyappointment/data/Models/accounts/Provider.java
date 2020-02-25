@@ -3,6 +3,10 @@ package com.example.easyappointment.data.Models.accounts;
 import com.example.easyappointment.data.Models.providerSpecifics.Category;
 import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
 import com.example.easyappointment.data.Models.providerSpecifics.Schedules;
+import com.example.easyappointment.data.Models.providerSpecifics.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
@@ -15,10 +19,12 @@ public class Provider {
     public ToOne<Account> account;
     public String address;
     public String telephone;
-    public ToMany<Provider_Service> services;
+    public ToMany<Provider_Service> provider_services;
     public ToMany<Schedules> schedules;
     public ToOne<Category> category;
 
+    public Provider() {
+    }
 
     public Provider(String address, String telephone) {
         this.address = address;
@@ -49,12 +55,17 @@ public class Provider {
         this.telephone = telephone;
     }
 
-    public ToMany<Provider_Service> getServices() {
+    public List<Service> getServices() {
+        List<Service> services = new ArrayList();
+        for (int i = 0; i < provider_services.size(); i++) {
+            services.add(provider_services.get(i).service.getTarget());
+        }
+
         return services;
     }
 
     public void setServices(ToMany<Provider_Service> services) {
-        this.services = services;
+        this.provider_services = services;
     }
 
     @Override
@@ -63,7 +74,7 @@ public class Provider {
                 "account=" + account +
                 ", address='" + address + '\'' +
                 ", telephone='" + telephone + '\'' +
-                ", services=" + services +
+                ", provider_services=" + provider_services +
                 ", schedules=" + schedules +
                 ", category=" + category +
                 '}';

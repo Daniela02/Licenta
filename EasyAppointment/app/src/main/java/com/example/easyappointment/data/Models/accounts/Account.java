@@ -10,6 +10,9 @@ public class Account {
     public String name;
     public String type;// client or provider
 
+    public Account() {
+    }
+
     public Account(String email, String name) {
         this.email = email;
         this.name = name;

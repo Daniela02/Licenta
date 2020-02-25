@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.AddServiceFragment">
+    tools:context=".Fragments.ProviderSpecific.AddServiceFragment">
 
     <RelativeLayout
+        android:id="@+id/add_service_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -75,6 +76,15 @@
             android:layout_below="@id/serviceDurationTextView"
             android:ems="10"
             android:inputType="time" />
+
+        <Button
+            android:id="@+id/submit_new_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/addServiceDuration"
+            android:layout_marginTop="15dp"
+            android:text="Submit"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

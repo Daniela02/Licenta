@@ -1,4 +1,4 @@
-package com.example.easyappointment.Fragments;
+package com.example.easyappointment.Fragments.Common;
 
 import android.content.Intent;
 import android.os.Bundle;

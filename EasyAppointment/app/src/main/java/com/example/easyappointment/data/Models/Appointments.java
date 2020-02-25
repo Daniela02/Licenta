@@ -16,6 +16,9 @@ public class Appointments {
     public String start_time;
     public String end_time;
 
+    public Appointments() {
+    }
+
     public Appointments(String status, String start_time, String end_time) {
         this.status = status;
         this.start_time = start_time;

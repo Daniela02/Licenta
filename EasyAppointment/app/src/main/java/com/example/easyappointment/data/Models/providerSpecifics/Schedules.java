@@ -14,6 +14,9 @@ public class Schedules {
     public String start_time;
     public String end_time;
 
+    public Schedules() {
+    }
+
     public Schedules(String weekDay, String start_time, String end_time) {
         this.weekDay = weekDay;
         this.start_time = start_time;

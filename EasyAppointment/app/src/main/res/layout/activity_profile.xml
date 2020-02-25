@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.example.easyappointment.Fragments.SignOutFragment"
+        android:name="com.example.easyappointment.Fragments.Common.SignOutFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_email"

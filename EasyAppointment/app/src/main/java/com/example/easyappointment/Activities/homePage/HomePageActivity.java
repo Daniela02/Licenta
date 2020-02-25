@@ -30,7 +30,7 @@ public class HomePageActivity extends AppCompatActivity {
     public static final String EMAIL = "EMAIL";
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
-    private Account account;
+    public Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +47,28 @@ public class HomePageActivity extends AppCompatActivity {
         FloatingActionButton clientSearch = findViewById(R.id.client_search);
         FloatingActionButton providerAddService = findViewById(R.id.provider_add_service);
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_future_appointments, R.id.nav_appointments,
+                R.id.nav_change_personal_details, R.id.nav_signout, R.id.nav_change_category,
+                R.id.nav_change_schedule, R.id.nav_services, R.id.provider_add_service)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+        ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_email))).setText(email);
+        ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_name))).setText(name);
+
         if (account.type.equals("Provider")) {
             //PROVIDER
             clientSearch.hide();
-
-            providerAddService.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "New Service", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    //TODO submit button for each edit fragment and functions for updating data base
-
-                }
+            Navigation.setViewNavController(providerAddService, navController);
+            providerAddService.setOnClickListener(v -> {
+                navController.navigate(R.id.provider_add_service);
             });
 
         } else {
@@ -77,22 +87,6 @@ public class HomePageActivity extends AppCompatActivity {
             });
         }
 
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_future_appointments, R.id.nav_appointments,
-                R.id.nav_change_personal_details, R.id.nav_signout, R.id.nav_change_category,
-                R.id.nav_change_schedule, R.id.nav_services)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-        ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_email))).setText(email);
-        ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_name))).setText(name);
 
     }
 
