@@ -1,11 +1,13 @@
 package com.example.easyappointment.data.Models.accounts;
 
+import com.example.easyappointment.data.Models.Appointments;
 import com.example.easyappointment.data.Models.providerSpecifics.Category;
 import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
 import com.example.easyappointment.data.Models.providerSpecifics.Schedules;
 import com.example.easyappointment.data.Models.providerSpecifics.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.objectbox.annotation.Entity;
@@ -64,10 +66,28 @@ public class Provider {
         return services;
     }
 
-    public void setServices(ToMany<Provider_Service> services) {
-        this.provider_services = services;
-    }
+    public List<Appointments> getAppointments() {
+        List<Appointments> appointments = new ArrayList<>();
+        for (int i = 0; i < provider_services.size(); i++) {
+            for (int j = 0; j < provider_services.get(i).appointments.size(); j++) {
+                appointments.add(provider_services.get(i).appointments.get(j));
+            }
+        }
 
+        appointments.sort((a1, a2) -> {
+            Date startTime1 = new Date(a1.start_time);
+            Date startTime2 = new Date(a2.start_time);
+            if (startTime1.before(startTime2)) {
+                return 1;
+            }
+            if (startTime1.equals(startTime2)) {
+                return 0;
+            }
+            return -1;
+        });
+
+        return appointments;
+    }
     @Override
     public String toString() {
         return "Provider{" +

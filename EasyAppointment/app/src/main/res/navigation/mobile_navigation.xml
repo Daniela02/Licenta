@@ -29,8 +29,8 @@
 
     <fragment
         android:id="@+id/nav_appointments"
-        android:name="com.example.easyappointment.Fragments.Common.AppointmentsFragment"
-        android:label="Appointments"
+        android:name="com.example.easyappointment.Fragments.ClientSpecific.AppointmentsHistoryFragment"
+        android:label="Appointments History"
         tools:layout="@layout/fragment_appointments" />
 
     <fragment
@@ -62,5 +62,22 @@
         android:name="com.example.easyappointment.Fragments.ProviderSpecific.AddServiceFragment"
         android:label="New Service"
         tools:layout="@layout/fragment_add_service" />
+
+    <fragment
+        android:id="@+id/provider_pending_appointment"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.PendingAppointmentsFragment"
+        android:label="Pending Appointments"
+        tools:layout="@layout/fragment_pending_appointments" />
+
+    <fragment
+        android:id="@+id/client_search"
+        android:name="com.example.easyappointment.Fragments.ClientSpecific.SearchForProviderFragment"
+        android:label="Providers"
+        tools:layout="@layout/fragment_search_for_provider">
+        <argument
+            android:name="category_name"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

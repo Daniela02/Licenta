@@ -12,7 +12,7 @@ public class Appointments {
     @Id public Long appointments_id;
     public ToOne<Client> client;
     public ToOne<Provider_Service> provider_service;
-    public String status; //pending, booked, happened, canceled
+    public String status; //pending, booked
     public String start_time;
     public String end_time;
 

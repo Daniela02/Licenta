@@ -1,4 +1,4 @@
-package com.example.easyappointment.Fragments.Common;
+package com.example.easyappointment.Fragments.ClientSpecific;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.easyappointment.R;
 
-public class AppointmentsFragment extends Fragment {
+public class AppointmentsHistoryFragment extends Fragment {
 
-    public AppointmentsFragment() {
+    public AppointmentsHistoryFragment() {
         // Required empty public constructor
     }
 

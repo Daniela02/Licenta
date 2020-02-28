@@ -12,10 +12,13 @@
             android:title="Edit Personal Details" />
         <item
             android:id="@+id/nav_appointments"
-            android:title="Appointments" />
+            android:title="Appointments History" />
         <item
             android:id="@+id/nav_future_appointments"
             android:title="Future Appointments" />
+        <item
+            android:id="@+id/nav_pending_appointments"
+            android:title="Pending Appointments" />
         <item
             android:id="@+id/nav_services"
             android:title="Services" />

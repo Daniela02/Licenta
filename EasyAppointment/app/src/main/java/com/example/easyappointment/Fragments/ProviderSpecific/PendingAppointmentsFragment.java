@@ -1,7 +1,6 @@
-package com.example.easyappointment.Fragments.ClientSpecific;
+package com.example.easyappointment.Fragments.ProviderSpecific;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.easyappointment.R;
 
-public class SearchForProviderFragment extends Fragment {
+public class PendingAppointmentsFragment extends Fragment {
 
-    public SearchForProviderFragment() {
+
+    public PendingAppointmentsFragment() {
         // Required empty public constructor
     }
 
@@ -20,13 +20,7 @@ public class SearchForProviderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_search_for_provider, container, false);
-        if (getArguments() != null) {
-            Log.d("Search", getArguments().getString("category_name"));
-        }
-
-        return view;
+        return inflater.inflate(R.layout.fragment_pending_appointments, container, false);
     }
-
 
 }

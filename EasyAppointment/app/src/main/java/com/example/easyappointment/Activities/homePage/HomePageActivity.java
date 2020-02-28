@@ -3,7 +3,6 @@ package com.example.easyappointment.Activities.homePage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import com.example.easyappointment.data.Models.accounts.Account;
 import com.example.easyappointment.data.Models.accounts.Account_;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import io.objectbox.Box;
 
@@ -54,7 +52,8 @@ public class HomePageActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_future_appointments, R.id.nav_appointments,
                 R.id.nav_change_personal_details, R.id.nav_signout, R.id.nav_change_category,
-                R.id.nav_change_schedule, R.id.nav_services, R.id.provider_add_service)
+                R.id.nav_change_schedule, R.id.nav_services, R.id.provider_add_service,
+                R.id.nav_pending_appointments, R.id.client_search)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -66,6 +65,7 @@ public class HomePageActivity extends AppCompatActivity {
         if (account.type.equals("Provider")) {
             //PROVIDER
             clientSearch.hide();
+            hideClientSpecificMenuItems();
             Navigation.setViewNavController(providerAddService, navController);
             providerAddService.setOnClickListener(v -> {
                 navController.navigate(R.id.provider_add_service);
@@ -76,14 +76,9 @@ public class HomePageActivity extends AppCompatActivity {
             providerAddService.hide();
 
             hideProviderSpecificMenuItems();
-
-            clientSearch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    //TODO search fragment
-                }
+            Navigation.setViewNavController(clientSearch, navController);
+            clientSearch.setOnClickListener(view -> {
+                navController.navigate(R.id.client_search);
             });
         }
 
@@ -111,5 +106,12 @@ public class HomePageActivity extends AppCompatActivity {
         nav_menu.findItem(R.id.nav_services).setVisible(false);
         nav_menu.findItem(R.id.nav_change_category).setVisible(false);
         nav_menu.findItem(R.id.nav_change_schedule).setVisible(false);
+        nav_menu.findItem(R.id.nav_pending_appointments).setVisible(false);
+    }
+
+    public void hideClientSpecificMenuItems() {
+        navigationView = findViewById(R.id.nav_view);
+        Menu nav_menu = navigationView.getMenu();
+        nav_menu.findItem(R.id.nav_appointments).setVisible(false);
     }
 }

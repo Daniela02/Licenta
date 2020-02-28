@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
-import com.example.easyappointment.data.Models.ListServiceAdapter;
+import com.example.easyappointment.data.Adapters.ListServiceAdapter;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Provider;
 import com.example.easyappointment.data.Models.accounts.Provider_;

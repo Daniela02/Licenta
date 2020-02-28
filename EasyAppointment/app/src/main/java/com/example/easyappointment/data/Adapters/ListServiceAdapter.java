@@ -1,4 +1,4 @@
-package com.example.easyappointment.data.Models;
+package com.example.easyappointment.data.Adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easyappointment.R;
+import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Provider;
 import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
 import com.example.easyappointment.data.Models.providerSpecifics.Service;
