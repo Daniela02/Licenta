@@ -113,6 +113,11 @@ public class LoginActivity extends AppCompatActivity {
         //check if mail is in account table
         String email =  googleSignInAccount.getEmail();
         String name =  googleSignInAccount.getDisplayName();
+        String image = null;
+        if (googleSignInAccount.getPhotoUrl() != null) {
+            image = googleSignInAccount.getPhotoUrl().toString();
+        }
+
         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
         List<Account> findEmail = accountBox.query().equal(Account_.email, email).build().find();
         //TODO delete
@@ -124,10 +129,14 @@ public class LoginActivity extends AppCompatActivity {
             Intent clientOrProviderIntent = new Intent(this, ChooseTypeActivity.class);
             clientOrProviderIntent.putExtra(ChooseTypeActivity.ACCOUNT_EMAIL, email);
             clientOrProviderIntent.putExtra(ChooseTypeActivity.ACCOUNT_NAME, name);
+            clientOrProviderIntent.putExtra(ChooseTypeActivity.ACCOUNT_IMAGE, image);
             startActivity(clientOrProviderIntent);
             finish();
         }
         else {
+            Account account = accountBox.query().equal(Account_.name, name).equal(Account_.email, email).build().findFirst();
+            account.setImageURL(image);
+            accountBox.put(account);
             Intent intent = new Intent(this, HomePageActivity.class);
             intent.putExtra(HomePageActivity.NAME, name);
             intent.putExtra(HomePageActivity.EMAIL, email);

@@ -19,6 +19,7 @@ import io.objectbox.Box;
 public class ChooseTypeActivity extends AppCompatActivity {
     public static final String ACCOUNT_NAME = "name";
     public static final String ACCOUNT_EMAIL = "email";
+    public static final String ACCOUNT_IMAGE = "image";
     private Button clientButton;
     private Button providerButton;
 
@@ -33,6 +34,8 @@ public class ChooseTypeActivity extends AppCompatActivity {
         Intent chooseIntent = getIntent();
         final String name = chooseIntent.getStringExtra(ACCOUNT_NAME);
         final String email = chooseIntent.getStringExtra(ACCOUNT_EMAIL);
+        final String image = chooseIntent.getStringExtra(ACCOUNT_IMAGE);
+
 
         clientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +43,7 @@ public class ChooseTypeActivity extends AppCompatActivity {
                 //CREATING THE NEW ACCOUNT
                 Account account = new Account(email, name);
                 account.setType("Client");
+                account.setImageURL(image);
 
                 Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
 

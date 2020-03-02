@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
             Date now = new Date();
             List<Appointments> appointmentsList = provider.getAppointments()
                     .stream()
-                    .filter(a -> (new Date(a.start_time).before(now)))
+                    .filter(a -> (new Date(a.start_time).after(now)))
                     .filter(a -> a.status.contains("accepted"))
                     .collect(Collectors.toList());
             mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false);

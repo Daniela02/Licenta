@@ -6,11 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
+import com.example.easyappointment.data.Adapters.ListAppointmentsAdapter;
+import com.example.easyappointment.data.Models.Appointments;
+import com.example.easyappointment.data.Models.ObjectBox;
+import com.example.easyappointment.data.Models.accounts.Provider;
+import com.example.easyappointment.data.Models.accounts.Provider_;
+
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import io.objectbox.Box;
 
 public class PendingAppointmentsFragment extends Fragment {
 
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public PendingAppointmentsFragment() {
         // Required empty public constructor
@@ -19,8 +36,27 @@ public class PendingAppointmentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pending_appointments, container, false);
+        View view = inflater.inflate(R.layout.fragment_pending_appointments, container, false);
+
+        HomePageActivity host = (HomePageActivity) getActivity();
+        recyclerView = view.findViewById(R.id.pendingAppointmentsRecycleView);
+
+        if (host.account.type.contains("Provider")) {
+            Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
+            Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
+
+            layoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            Date now = new Date();
+            List<Appointments> appointmentsList = provider.getAppointments()
+                    .stream()
+                    .filter(a -> a.status.contains("pending"))
+                    .collect(Collectors.toList());
+            mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false);
+            recyclerView.setAdapter(mAdapter);
+        }
+        return view;
+
     }
 
 }

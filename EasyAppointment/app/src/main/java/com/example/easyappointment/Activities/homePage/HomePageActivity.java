@@ -1,8 +1,10 @@
 package com.example.easyappointment.Activities.homePage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.example.easyappointment.data.Models.accounts.Account;
 import com.example.easyappointment.data.Models.accounts.Account_;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import io.objectbox.Box;
 
@@ -49,18 +52,18 @@ public class HomePageActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_future_appointments, R.id.nav_appointments,
-                R.id.nav_change_personal_details, R.id.nav_signout, R.id.nav_change_category,
-                R.id.nav_change_schedule, R.id.nav_services, R.id.provider_add_service,
-                R.id.nav_pending_appointments, R.id.client_search)
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_email))).setText(email);
         ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_name))).setText(name);
+        ImageView profilePicture = ((ImageView) (navigationView.getHeaderView(0).findViewById(R.id.nav_image_profile)));
+        if (account.imageURL != null) {
+            Picasso.get().load(Uri.parse(account.imageURL)).into(profilePicture);
+        }
 
         if (account.type.equals("Provider")) {
             //PROVIDER
@@ -81,8 +84,6 @@ public class HomePageActivity extends AppCompatActivity {
                 navController.navigate(R.id.client_search);
             });
         }
-
-
     }
 
     @Override
@@ -113,5 +114,6 @@ public class HomePageActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         Menu nav_menu = navigationView.getMenu();
         nav_menu.findItem(R.id.nav_appointments).setVisible(false);
+        nav_menu.findItem(R.id.nav_future_appointments).setVisible(false);
     }
 }

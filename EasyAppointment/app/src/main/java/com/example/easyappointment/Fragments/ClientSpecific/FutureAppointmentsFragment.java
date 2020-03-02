@@ -23,24 +23,25 @@ import java.util.stream.Collectors;
 
 import io.objectbox.Box;
 
-public class AppointmentsHistoryFragment extends Fragment {
+public class FutureAppointmentsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    public AppointmentsHistoryFragment() {
+    public FutureAppointmentsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_appointments, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_future_appointments, container, false);
         Date now = new Date();
 
         HomePageActivity host = (HomePageActivity) getActivity();
-        recyclerView = view.findViewById(R.id.historyAppointmentsRecycleView);
+        recyclerView = view.findViewById(R.id.futureAppointmentsRecycleView);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -49,9 +50,9 @@ public class AppointmentsHistoryFragment extends Fragment {
             Client client = clientBox.query().equal(Client_.accountId, host.account.account_id).build().findFirst();
             List<Appointments> appointmentsList = client.getAppointments()
                     .stream()
-                    .filter(a -> (new Date(a.start_time).before(now)))
+                    .filter(a -> (new Date(a.start_time).after(now)))
                     .collect(Collectors.toList());
-            mAdapter = new ListAppointmentsAdapter(appointmentsList, false, true);
+            mAdapter = new ListAppointmentsAdapter(appointmentsList, false, false);
         }
 
         recyclerView.setAdapter(mAdapter);

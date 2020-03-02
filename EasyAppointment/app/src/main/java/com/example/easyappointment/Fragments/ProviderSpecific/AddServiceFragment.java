@@ -44,7 +44,7 @@ public class AddServiceFragment extends Fragment {
             submitButton.setOnClickListener(v -> {
                 String serviceName = ((EditText) view.findViewById(R.id.addServiceName)).getText().toString();
                 String serviceDescription = ((EditText) view.findViewById(R.id.addServiceDescription)).getText().toString();
-                String serviceDuration = ((EditText) view.findViewById(R.id.addServiceDuration)).getText().toString();
+                Integer serviceDuration = Integer.parseInt(((EditText) view.findViewById(R.id.addServiceDuration)).getText().toString());
                 Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
 
                 Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);

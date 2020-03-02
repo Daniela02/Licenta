@@ -1,5 +1,6 @@
 package com.example.easyappointment.data.Adapters;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Provider;
@@ -25,16 +29,20 @@ import io.objectbox.Box;
 public class ListServiceAdapter extends RecyclerView.Adapter {
 
     private List<Service> serviceList;
+    private Boolean isClient;
+    private HomePageActivity host;
 
-    public ListServiceAdapter(List<Service> serviceList) {
+    public ListServiceAdapter(List<Service> serviceList, Boolean isClient, HomePageActivity host) {
         this.serviceList = serviceList;
+        this.isClient = isClient;
+        this.host = host;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_service, parent, false);
-        return new ListViewHolder(view, serviceList);
+        return new ListViewHolder(view, serviceList, isClient, host);
     }
 
     @Override
@@ -60,8 +68,10 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
         private Button submitButton;
         private LinearLayout serviceLayout;
         private List<Service> servicesList;
+        private Boolean isClient;
+        private HomePageActivity host;
 
-        public ListViewHolder(@NonNull View itemView, List<Service> servicesList) {
+        public ListViewHolder(@NonNull View itemView, List<Service> servicesList, Boolean isClient, HomePageActivity host) {
             super(itemView);
             serviceName = itemView.findViewById(R.id.show_service_name);
             serviceDescription = itemView.findViewById(R.id.show_service_description);
@@ -73,7 +83,9 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
             deleteButton = itemView.findViewById(R.id.delete_service_button);
             submitButton = itemView.findViewById(R.id.submit_service_button);
             serviceLayout = itemView.findViewById(R.id.list_service);
+            this.isClient = isClient;
             this.servicesList = servicesList;
+            this.host = host;
 
             itemView.setOnClickListener(this::onClick);
 
@@ -92,72 +104,86 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
             Service service = servicesList.get(poz);
             serviceName.setText(service.name);
             serviceDescription.setText(service.description);
-            serviceDuration.setText(service.duration + " h");
+            serviceDuration.setText(service.duration + " min");
+            if (isClient) {
+                submitButton.setText("New");
 
-
-            deleteButton.setOnClickListener(v -> {
-                serviceLayout.setVisibility(View.GONE);
-                Provider_Service provider_service = service.provider_service.getTarget();
-                Provider provider = provider_service.provider.getTarget();
-
-                serviceDuration.setVisibility(View.GONE);
-                serviceName.setVisibility(View.GONE);
-                serviceDescription.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);
                 editButton.setVisibility(View.GONE);
-
-                Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
-                Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);
-
-
-                provider.provider_services.remove(provider_service);
-                serviceBox.remove(service);
-                provider_serviceBox.remove(provider_service);
-
-            });
-
-            editButton.setOnClickListener(v -> {
-                serviceDuration.setVisibility(View.GONE);
-                serviceName.setVisibility(View.GONE);
-                serviceDescription.setVisibility(View.GONE);
-                editButton.setVisibility(View.GONE);
-                deleteButton.setVisibility(View.GONE);
-
-                editServiceName.setVisibility(View.VISIBLE);
-                editServiceDescription.setVisibility(View.VISIBLE);
-                editServiceDuration.setVisibility(View.VISIBLE);
                 submitButton.setVisibility(View.VISIBLE);
 
-                editServiceName.setText(service.name);
-                editServiceDescription.setText(service.description);
-                editServiceDuration.setText(service.duration);
-            });
+                submitButton.setOnClickListener(v -> {
+                    NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("service_id", service.id.toString());
+                    navController.navigate(R.id.new_appointment, bundle);
+                });
+            } else {
+                deleteButton.setOnClickListener(v -> {
+                    serviceLayout.setVisibility(View.GONE);
+                    Provider_Service provider_service = service.provider_service.getTarget();
+                    Provider provider = provider_service.provider.getTarget();
 
-            submitButton.setOnClickListener(v -> {
-                String name = editServiceName.getText().toString();
-                String description = editServiceDescription.getText().toString();
-                String duration = editServiceDuration.getText().toString();
-                service.setName(name);
-                service.setDescription(description);
-                service.setDuration(duration);
-                Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
-                serviceBox.put(service);
+                    serviceDuration.setVisibility(View.GONE);
+                    serviceName.setVisibility(View.GONE);
+                    serviceDescription.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+                    editButton.setVisibility(View.GONE);
 
-                serviceDuration.setVisibility(View.VISIBLE);
-                serviceName.setVisibility(View.VISIBLE);
-                serviceDescription.setVisibility(View.VISIBLE);
-                editButton.setVisibility(View.VISIBLE);
-                deleteButton.setVisibility(View.VISIBLE);
+                    Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
+                    Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);
 
-                editServiceName.setVisibility(View.GONE);
-                editServiceDescription.setVisibility(View.GONE);
-                editServiceDuration.setVisibility(View.GONE);
-                submitButton.setVisibility(View.GONE);
 
-                serviceName.setText(service.name);
-                serviceDescription.setText(service.description);
-                serviceDuration.setText(service.duration + " h");
-            });
+                    provider.provider_services.remove(provider_service);
+                    serviceBox.remove(service);
+                    provider_serviceBox.remove(provider_service);
+
+                });
+
+                editButton.setOnClickListener(v -> {
+                    serviceDuration.setVisibility(View.GONE);
+                    serviceName.setVisibility(View.GONE);
+                    serviceDescription.setVisibility(View.GONE);
+                    editButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+
+                    editServiceName.setVisibility(View.VISIBLE);
+                    editServiceDescription.setVisibility(View.VISIBLE);
+                    editServiceDuration.setVisibility(View.VISIBLE);
+                    submitButton.setVisibility(View.VISIBLE);
+
+                    editServiceName.setText(service.name);
+                    editServiceDescription.setText(service.description);
+                    editServiceDuration.setText(service.duration);
+                });
+
+                submitButton.setOnClickListener(v -> {
+                    String name = editServiceName.getText().toString();
+                    String description = editServiceDescription.getText().toString();
+                    Integer duration = Integer.parseInt(editServiceDuration.getText().toString());
+                    service.setName(name);
+                    service.setDescription(description);
+                    service.setDuration(duration);
+                    Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
+                    serviceBox.put(service);
+
+                    serviceDuration.setVisibility(View.VISIBLE);
+                    serviceName.setVisibility(View.VISIBLE);
+                    serviceDescription.setVisibility(View.VISIBLE);
+                    editButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.VISIBLE);
+
+                    editServiceName.setVisibility(View.GONE);
+                    editServiceDescription.setVisibility(View.GONE);
+                    editServiceDuration.setVisibility(View.GONE);
+                    submitButton.setVisibility(View.GONE);
+
+                    serviceName.setText(service.name);
+                    serviceDescription.setText(service.description);
+                    serviceDuration.setText(service.duration + " h");
+                });
+            }
+
         }
     }
 }

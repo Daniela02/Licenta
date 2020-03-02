@@ -150,7 +150,7 @@ public class CustomizeProviderActivity extends AppCompatActivity {
                         //SERVICE
                         String serviceName = ((EditText) findViewById(R.id.addServiceName)).getText().toString();
                         String serviceDescription = ((EditText) findViewById(R.id.addServiceDescription)).getText().toString();
-                        String serviceDuration = ((EditText) findViewById(R.id.addServiceDuration)).getText().toString();
+                        Integer serviceDuration = Integer.parseInt(((EditText) findViewById(R.id.addServiceDuration)).getText().toString());
 
                         Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);
                         Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);

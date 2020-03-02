@@ -9,6 +9,7 @@ public class Account {
     public String email;
     public String name;
     public String type;// client or provider
+    public String imageURL;
 
     public Account() {
     }
@@ -40,6 +41,14 @@ public class Account {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     @Override

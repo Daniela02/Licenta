@@ -46,7 +46,7 @@ public class ServicesFragment extends Fragment {
 
         Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
         List<Service> servicesList = provider.getServices();
-        mAdapter = new ListServiceAdapter(servicesList);
+        mAdapter = new ListServiceAdapter(servicesList, false, host);
         recyclerView.setAdapter(mAdapter);
         return view;
     }

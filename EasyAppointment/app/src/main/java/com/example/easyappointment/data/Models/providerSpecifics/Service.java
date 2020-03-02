@@ -11,13 +11,13 @@ public class Service {
     public ToOne<Provider_Service> provider_service;
     public String name;
     public String description;
-    @Uid(3971746293054693494L)
-    public String duration; //minutes
+    @Uid(6059980457444666489L)
+    public Integer duration; //minutes
 
     public Service() {
     }
 
-    public Service(String name, String description, String duration) {
+    public Service(String name, String description, Integer duration) {
         this.name = name;
         this.description = description;
         this.duration = duration;
@@ -47,11 +47,11 @@ public class Service {
         this.description = description;
     }
 
-    public String getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
