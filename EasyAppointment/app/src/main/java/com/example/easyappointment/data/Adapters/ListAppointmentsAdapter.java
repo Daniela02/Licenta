@@ -1,15 +1,17 @@
 package com.example.easyappointment.data.Adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.Appointments;
 import com.example.easyappointment.data.Models.ObjectBox;
@@ -24,18 +26,20 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
     private List<Appointments> appointmentsList;
     private Boolean isProvider;
     private Boolean showHistory;
+    private HomePageActivity host;
 
-    public ListAppointmentsAdapter(List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory) {
+    public ListAppointmentsAdapter(List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory, HomePageActivity host) {
         this.appointmentsList = appointmentsList;
         this.isProvider = isProvider;
         this.showHistory = showHistory;
+        this.host = host;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_show_appointments, parent, false);
-        return new ListViewHolder(view, appointmentsList, isProvider, showHistory);
+        return new ListViewHolder(view, appointmentsList, isProvider, showHistory, host);
     }
 
     @Override
@@ -53,25 +57,29 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
         private List<Appointments> appointmentsList;
         private Boolean isProvider;
         private Boolean showHistory;
-        private Button cancelAcceptButton;
+        private Button cancelButton;
+        private Button acceptButton;
         private TextView serviceName;
         private TextView providerName;
         private TextView startTime;
         private TextView status;
+        private LinearLayout appointmentLayout;
+        private HomePageActivity host;
 
-        public ListViewHolder(@NonNull View itemView, List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory) {
+        public ListViewHolder(@NonNull View itemView, List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory, HomePageActivity host) {
             super(itemView);
             this.appointmentsList = appointmentsList;
             this.isProvider = isProvider;
             this.showHistory = showHistory;
-            this.cancelAcceptButton = itemView.findViewById(R.id.appointment_accept_cancel_button);
+            this.cancelButton = itemView.findViewById(R.id.appointment_cancel_button);
+            this.acceptButton = itemView.findViewById(R.id.appointment_accept_button);
             this.serviceName = itemView.findViewById(R.id.appointment_service_name);
             this.providerName = itemView.findViewById(R.id.appointment_provider);
             this.startTime = itemView.findViewById(R.id.appointment_start_time);
             this.status = itemView.findViewById(R.id.appointment_status);
+            this.host = host;
+            this.appointmentLayout = itemView.findViewById(R.id.layout_appointment);
             itemView.setOnClickListener(this::onClick);
-
-            Log.d("Adapter ", appointmentsList.toString());
         }
 
 
@@ -87,40 +95,47 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
             providerName.setText(appointment.provider_service.getTarget().provider.getTarget().account.getTarget().name);
             startTime.setText(appointment.start_time);
             status.setText(appointment.status);
+            if (appointment.status.equals("pending")) {
+                status.setTextColor(ContextCompat.getColor(host, R.color.colorPrimary));
+            }
             if (isProvider) {
+
+                cancelButton.setOnClickListener(v -> {
+                    Provider_Service provider_service = appointment.provider_service.getTarget();
+                    provider_service.appointments.remove(appointment);
+
+                    Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
+                    appointmentsBox.remove(appointment);
+
+                    serviceName.setVisibility(View.GONE);
+                    providerName.setVisibility(View.GONE);
+                    startTime.setVisibility(View.GONE);
+                    cancelButton.setVisibility(View.GONE);
+                    status.setVisibility(View.GONE);
+                });
+
                 if (appointment.status.contains("accepted")) {
                     //ACCEPTED APPOINTMENTS
-                    cancelAcceptButton.setText("Cancel");
+                    acceptButton.setVisibility(View.GONE);
                     status.setVisibility(View.GONE);
-
-                    cancelAcceptButton.setOnClickListener(v -> {
-                        Provider_Service provider_service = appointment.provider_service.getTarget();
-                        provider_service.appointments.remove(appointment);
-
-                        Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
-                        appointmentsBox.remove(appointment);
-
-                        serviceName.setVisibility(View.GONE);
-                        providerName.setVisibility(View.GONE);
-                        startTime.setVisibility(View.GONE);
-                    });
                 } else {
                     //PENDING
                     status.setVisibility(View.VISIBLE);
-                    cancelAcceptButton.setText("Accept");
-                    cancelAcceptButton.setOnClickListener(v -> {
+                    acceptButton.setOnClickListener(v -> {
+                        appointmentLayout.setVisibility(View.GONE);
                         appointment.setStatus("accepted");
+                        Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
                         status.setText(appointment.status);
+                        appointmentsBox.put(appointment);
                     });
                 }
 
             } else {
                 //CLIENT
-                status.setVisibility(View.VISIBLE);
-                if (showHistory == false && appointment.status.contains("accepted")) {
-                    cancelAcceptButton.setText("Cancel");
 
-                    cancelAcceptButton.setOnClickListener(v -> {
+                if (showHistory == false) {//Future
+                    status.setVisibility(View.VISIBLE);
+                    cancelButton.setOnClickListener(v -> {
                         Provider_Service provider_service = appointment.provider_service.getTarget();
                         provider_service.appointments.remove(appointment);
 
@@ -130,9 +145,15 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                         serviceName.setVisibility(View.GONE);
                         providerName.setVisibility(View.GONE);
                         startTime.setVisibility(View.GONE);
+                        cancelButton.setVisibility(View.GONE);
+                        status.setVisibility(View.GONE);
+
                     });
+                    acceptButton.setVisibility(View.GONE);
                 } else {
-                    cancelAcceptButton.setVisibility(View.GONE);
+                    status.setVisibility(View.GONE);
+                    cancelButton.setVisibility(View.GONE);
+                    acceptButton.setVisibility(View.GONE);
                 }
 
             }

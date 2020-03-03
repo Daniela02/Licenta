@@ -52,7 +52,7 @@ public class FutureAppointmentsFragment extends Fragment {
                     .stream()
                     .filter(a -> (new Date(a.start_time).after(now)))
                     .collect(Collectors.toList());
-            mAdapter = new ListAppointmentsAdapter(appointmentsList, false, false);
+            mAdapter = new ListAppointmentsAdapter(appointmentsList, false, false, host);
         }
 
         recyclerView.setAdapter(mAdapter);

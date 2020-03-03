@@ -64,14 +64,14 @@ public class HomeFragment extends Fragment {
                     .filter(a -> (new Date(a.start_time).after(now)))
                     .filter(a -> a.status.contains("accepted"))
                     .collect(Collectors.toList());
-            mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false);
+            mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false, host);
             recyclerView.setAdapter(mAdapter);
         }
         if (host.account.type.contains("Client")) {
             view.findViewById(R.id.accepted_appointments_TextView).setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
 
-            GridLayout gridLayout = (GridLayout) view.findViewById(R.id.category_GridLayout);
+            GridLayout gridLayout = view.findViewById(R.id.category_GridLayout);
             Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
             List<Category> categoryList = categoryBox.getAll();
             initImageMap(categoryList);
@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initImageMap(List<Category> categoryList) {
-        imageMap = new HashMap<String, Integer>();
+        imageMap = new HashMap<>();
         imageMap.put(categoryList.get(0).category_name, R.drawable.car);
         imageMap.put(categoryList.get(1).category_name, R.drawable.women_beauty);
         imageMap.put(categoryList.get(2).category_name, R.drawable.doctors);

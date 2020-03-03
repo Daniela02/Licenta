@@ -5,18 +5,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.Appointments;
 import com.example.easyappointment.data.Models.ObjectBox;
+import com.example.easyappointment.data.Models.accounts.Client;
+import com.example.easyappointment.data.Models.accounts.Client_;
 import com.example.easyappointment.data.Models.accounts.Provider;
+import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
 import com.example.easyappointment.data.Models.providerSpecifics.Schedules;
 import com.example.easyappointment.data.Models.providerSpecifics.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,17 +52,18 @@ public class NewAppointmentFragment extends Fragment {
 
         Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
         Service service = serviceBox.get(Long.parseLong(service_id));
+        Long duration = service.duration * 60000L;
         Provider provider = service.provider_service.getTarget().provider.getTarget();
+        Calendar calendar = Calendar.getInstance();
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, dayOfMonth);
-                calendar.set(Calendar.HOUR_OF_DAY, 0);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
+            calendar.set(year, month, dayOfMonth);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            if (calendar.getTime().after(new Date())) {
                 String dayOfWeek = getDayOfTheWeek(calendar.get(Calendar.DAY_OF_WEEK));
                 Optional<Schedules> schedules = provider.schedules
                         .stream()
@@ -63,48 +74,124 @@ public class NewAppointmentFragment extends Fragment {
                     Date chosenDay = calendar.getTime();
                     List<Appointments> appointmentsList = provider.getAppointments()
                             .stream()
-                            .filter(a -> a.start_time.contains(chosenDay.toString()))
+                            .filter(a -> a.start_time.contains(chosenDay.toString().substring(0, 9)))//month and day
+                            .filter(a -> a.start_time.contains(chosenDay.toString().substring(30, 33))) //year
                             .filter(a -> a.status.contains("accepted"))
-                            .collect(Collectors.toList());
+                            .collect(Collectors.toList()); //sorted
 
-                    Long duration = service.duration * 60000L;
                     calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(schedules.get().getStart_time()));
                     Long start_time = calendar.getTimeInMillis();
                     calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(schedules.get().getEnd_time()));
                     Long end_time = calendar.getTimeInMillis();
+                    List<String> availableTimeTables = new ArrayList<>();
 
+                    Long i = start_time;
+                    int poz = 0;
 
+                    while (i < end_time) {
+                        if (poz == appointmentsList.size()) {
+                            calendar.setTimeInMillis(i);
+                            String minute = String.valueOf(calendar.get(Calendar.MINUTE));
+                            String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+                            if (minute.length() == 1) {
+                                minute = '0' + minute;
+                            }
+                            availableTimeTables.add(hour + ":" + minute);
+                            i += duration;
+                            continue;
+                        }
+
+                        calendar.setTime(new Date(appointmentsList.get(poz).start_time));
+                        Long appointment_start_time = calendar.getTimeInMillis();
+                        calendar.setTime(new Date(appointmentsList.get(poz).end_time));
+                        Long appointment_end_time = calendar.getTimeInMillis();
+
+                        while (i < appointment_start_time) {
+
+                            if (i + duration <= appointment_start_time) {
+                                calendar.setTimeInMillis(i);
+                                String minute = String.valueOf(calendar.get(Calendar.MINUTE));
+                                String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+                                if (minute.length() == 1) {
+                                    minute = '0' + minute;
+                                }
+                                availableTimeTables.add(hour + ":" + minute);
+                            }
+                            i += duration;
+                        }
+                        i = appointment_end_time;
+                        poz++;
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, availableTimeTables);
+                    dropdownTimeTable.setAdapter(adapter);
                 }
-
-
             }
+        });
+
+        Button bookButton = view.findViewById(R.id.book_appointment_button);
+
+        bookButton.setOnClickListener(v -> {
+            String hour = dropdownTimeTable.getSelectedItem().toString().split(":")[0];
+            String minute = dropdownTimeTable.getSelectedItem().toString().split(":")[1];
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(minute));
+            Date start_time = calendar.getTime();
+            calendar.setTimeInMillis(calendar.getTimeInMillis() + duration);
+            Date end_time = calendar.getTime();
+            Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
+            Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
+
+            HomePageActivity host = (HomePageActivity) getActivity();
+
+            Client client = clientBox.query().equal(Client_.accountId, host.account.account_id).build().findFirst();
+            Provider_Service provider_service = service.provider_service.getTarget();
+
+            Appointments appointments = new Appointments();
+            appointmentsBox.attach(appointments);
+            appointments.setStart_time(start_time.toString());
+            appointments.setEnd_time(end_time.toString());
+            appointments.setStatus("pending");
+            appointments.client.setTarget(client);
+            appointments.provider_service.setTarget(provider_service);
+            client.appointments.add(appointments);
+            provider_service.appointments.add(appointments);
+
+            appointmentsBox.put(appointments);
+            clientBox.put(client);
+            ObjectBox.get().boxFor(Provider_Service.class).put(provider_service);
+
+            Toast.makeText(this.getActivity(), "Booked Appointment", Toast.LENGTH_SHORT).show();
+
+            NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
+            navController.navigate(R.id.nav_future_appointments);
         });
 
         return view;
     }
 
     private String getDayOfTheWeek(int day) {
-        String s;
+        String weekday;
         switch (day) {
             case Calendar.MONDAY:
-                s = new String("Monday");
+                weekday = "Monday";
                 break;
             case Calendar.TUESDAY:
-                s = new String("Monday");
+                weekday = "Tuesday";
                 break;
             case Calendar.WEDNESDAY:
-                s = new String("Monday");
+                weekday = "Wednesday";
                 break;
             case Calendar.THURSDAY:
-                s = new String("Monday");
+                weekday = "Thursday";
                 break;
             case Calendar.FRIDAY:
-                s = new String("Monday");
+                weekday = "Friday";
                 break;
             default:
-                s = new String("nu exista");
+                weekday = "no schedule";
                 break;
         }
-        return s;
+        return weekday;
     }
 }

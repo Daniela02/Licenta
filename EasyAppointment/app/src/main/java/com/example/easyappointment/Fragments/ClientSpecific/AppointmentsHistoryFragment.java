@@ -51,7 +51,7 @@ public class AppointmentsHistoryFragment extends Fragment {
                     .stream()
                     .filter(a -> (new Date(a.start_time).before(now)))
                     .collect(Collectors.toList());
-            mAdapter = new ListAppointmentsAdapter(appointmentsList, false, true);
+            mAdapter = new ListAppointmentsAdapter(appointmentsList, false, true, host);
         }
 
         recyclerView.setAdapter(mAdapter);

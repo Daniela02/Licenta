@@ -17,7 +17,6 @@ import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Provider;
 import com.example.easyappointment.data.Models.accounts.Provider_;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,12 +46,11 @@ public class PendingAppointmentsFragment extends Fragment {
 
             layoutManager = new LinearLayoutManager(this.getContext());
             recyclerView.setLayoutManager(layoutManager);
-            Date now = new Date();
             List<Appointments> appointmentsList = provider.getAppointments()
                     .stream()
                     .filter(a -> a.status.contains("pending"))
                     .collect(Collectors.toList());
-            mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false);
+            mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false, host);
             recyclerView.setAdapter(mAdapter);
         }
         return view;
