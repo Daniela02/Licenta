@@ -118,7 +118,7 @@
     },
     {
       "id": "4:1042481061107603544",
-      "lastPropertyId": "6:1884402811323292543",
+      "lastPropertyId": "8:5596339239988660481",
       "name": "Appointments",
       "properties": [
         {
@@ -157,6 +157,18 @@
           "type": 11,
           "flags": 1548,
           "relationTarget": "Provider_Service"
+        },
+        {
+          "id": "7:2134782784841758912",
+          "name": "seenByProvider",
+          "type": 1,
+          "flags": 2
+        },
+        {
+          "id": "8:5596339239988660481",
+          "name": "seenByClient",
+          "type": 1,
+          "flags": 2
         }
       ],
       "relations": []

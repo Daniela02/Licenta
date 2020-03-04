@@ -44,16 +44,32 @@ public class SelectCategoryFragment extends Fragment {
             HomePageActivity host = (HomePageActivity) getActivity();
 
             Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
-            Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
+            Provider provider = providerBox
+                    .query()
+                    .equal(Provider_.accountId, host.account.account_id)
+                    .build()
+                    .findFirst();
             ((TextView) view.findViewById(R.id.categoryTextView)).setText("Your current category is: " + provider.category.getTarget().category_name);
             ((TextView) view.findViewById(R.id.categoryTextView)).setTextSize(17);
 
             submitButton.setOnClickListener(v -> {
-                String selectedCategory = ((Spinner) view.findViewById(R.id.categorySpinner)).getSelectedItem().toString();
+                String selectedCategory = ((Spinner) view.findViewById(R.id.categorySpinner))
+                        .getSelectedItem()
+                        .toString();
 
                 Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
-                Category category = categoryBox.query().equal(Category_.category_name, selectedCategory).build().findFirst();
-                Category oldCategory = categoryBox.query().equal(Category_.category_name, provider.category.getTarget().category_name).build().findFirst();
+                Category category = categoryBox
+                        .query()
+                        .equal(Category_.category_name, selectedCategory)
+                        .build()
+                        .findFirst();
+
+                Category oldCategory = categoryBox
+                        .query()
+                        .equal(Category_.category_name, provider.category.getTarget().category_name)
+                        .build()
+                        .findFirst();
+
                 category.providers.add(provider);
                 provider.category.setTarget(category);
                 oldCategory.providers.remove(provider);

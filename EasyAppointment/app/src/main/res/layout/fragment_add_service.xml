@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/addServiceDuration"
             android:layout_marginTop="15dp"
-            android:text="Submit"
+            android:text="@string/submit"
             android:visibility="gone" />
 
     </RelativeLayout>

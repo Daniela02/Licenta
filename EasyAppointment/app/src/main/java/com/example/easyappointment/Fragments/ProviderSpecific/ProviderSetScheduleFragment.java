@@ -44,11 +44,11 @@ public class ProviderSetScheduleFragment extends Fragment {
             Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
 
 
-            Schedules monday = findWeekDayId(provider.schedules, "Monday");
-            Schedules tuesday = findWeekDayId(provider.schedules, "Tuesday");
-            Schedules wednesday = findWeekDayId(provider.schedules, "Wednesay");
-            Schedules thursday = findWeekDayId(provider.schedules, "Thursday");
-            Schedules friday = findWeekDayId(provider.schedules, "Friday");
+            Schedules monday = findWeekDayId(provider.schedules, getString(R.string.monday));
+            Schedules tuesday = findWeekDayId(provider.schedules, getString(R.string.tuesday));
+            Schedules wednesday = findWeekDayId(provider.schedules, getString(R.string.wednesday));
+            Schedules thursday = findWeekDayId(provider.schedules, getString(R.string.thursday));
+            Schedules friday = findWeekDayId(provider.schedules, getString(R.string.friday));
 
             //DISPLAYING OLD INFO
             ((EditText) view.findViewById(R.id.monStartTime)).setText(monday.getStart_time());
@@ -68,7 +68,7 @@ public class ProviderSetScheduleFragment extends Fragment {
 
             submitButton.setOnClickListener(v -> {
 
-                if (host.account.type.equals("Provider")) {
+                if (host.account.type.equals(getString(R.string.provider))) {
                     //PROVIDER
                     //GETTING NEW INFO
                     String startTime = ((EditText) view.findViewById(R.id.monStartTime)).getText().toString();

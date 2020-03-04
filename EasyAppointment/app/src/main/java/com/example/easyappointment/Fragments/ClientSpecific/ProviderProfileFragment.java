@@ -41,10 +41,13 @@ public class ProviderProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_provider_profile, container, false);
+
         Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
         provider = providerBox.get(Long.parseLong(getArguments().getString("provider_id")));
+
         String imageURL = provider.account.getTarget().imageURL;
-        ImageView profilePicture = ((ImageView) (view.findViewById(R.id.provider_photo_profile)));
+        ImageView profilePicture = view.findViewById(R.id.provider_photo_profile);
+
         if (imageURL != null) {
             Picasso.get().load(Uri.parse(imageURL)).into(profilePicture);
         }
@@ -57,21 +60,21 @@ public class ProviderProfileFragment extends Fragment {
             ((TextView) view.findViewById(R.id.provider_telephone_profile)).setText("Tel: " + provider.telephone);
             ((TextView) view.findViewById(R.id.provider_email_profile)).setText("Email: " + provider.account.getTarget().email);
 
-            ((TextView) view.findViewById(R.id.provider_address_profile)).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.provider_telephone_profile)).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.provider_email_profile)).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.provider_address_profile).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.provider_telephone_profile).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.provider_email_profile).setVisibility(View.VISIBLE);
             showDetails.setVisibility(View.GONE);
 
         });
 
         view.findViewById(R.id.details_layout_profile).setOnClickListener(v -> {
-            ((TextView) view.findViewById(R.id.provider_address_profile)).setVisibility(View.GONE);
-            ((TextView) view.findViewById(R.id.provider_telephone_profile)).setVisibility(View.GONE);
-            ((TextView) view.findViewById(R.id.provider_email_profile)).setVisibility(View.GONE);
+            view.findViewById(R.id.provider_address_profile).setVisibility(View.GONE);
+            view.findViewById(R.id.provider_telephone_profile).setVisibility(View.GONE);
+            view.findViewById(R.id.provider_email_profile).setVisibility(View.GONE);
             showDetails.setVisibility(View.VISIBLE);
         });
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.servicesRecycleView_profile);
+        recyclerView = view.findViewById(R.id.servicesRecycleView_profile);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);

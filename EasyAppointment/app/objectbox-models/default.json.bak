@@ -118,7 +118,7 @@
     },
     {
       "id": "4:1042481061107603544",
-      "lastPropertyId": "6:1884402811323292543",
+      "lastPropertyId": "7:2134782784841758912",
       "name": "Appointments",
       "properties": [
         {
@@ -157,6 +157,12 @@
           "type": 11,
           "flags": 1548,
           "relationTarget": "Provider_Service"
+        },
+        {
+          "id": "7:2134782784841758912",
+          "name": "seenByProvider",
+          "type": 1,
+          "flags": 2
         }
       ],
       "relations": []
@@ -261,7 +267,7 @@
     },
     {
       "id": "8:4320142652104654531",
-      "lastPropertyId": "6:3971746293054693494",
+      "lastPropertyId": "7:6059980457444666489",
       "name": "Service",
       "properties": [
         {
@@ -289,9 +295,10 @@
           "relationTarget": "Provider_Service"
         },
         {
-          "id": "6:3971746293054693494",
+          "id": "7:6059980457444666489",
           "name": "duration",
-          "type": 9
+          "type": 5,
+          "flags": 2
         }
       ],
       "relations": []
@@ -303,9 +310,6 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "newUidPool": [
-    6059980457444666489
-  ],
   "retiredEntityUids": [
     7238188445166308745
   ],
@@ -325,7 +329,8 @@
     7723110941208675275,
     3144091156565272004,
     8306110015055846163,
-    6942170077276478977
+    6942170077276478977,
+    3971746293054693494
   ],
   "retiredRelationUids": [
     6069462589230801802,

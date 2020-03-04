@@ -29,6 +29,8 @@ public class HomePageActivity extends AppCompatActivity {
 
     public static final String NAME = "NAME";
     public static final String EMAIL = "EMAIL";
+    public static final String NOTIFICATION = "NOTIFICATION";
+    private Intent intent;
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
     public Account account;
@@ -37,11 +39,16 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Intent intent = getIntent();
+        intent = getIntent();
         String email = intent.getStringExtra(EMAIL);
         String name = intent.getStringExtra(NAME);
         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
-        account = accountBox.query().equal(Account_.email, email).equal(Account_.name, name).build().findFirst();
+        account = accountBox
+                .query()
+                .equal(Account_.email, email)
+                .equal(Account_.name, name)
+                .build()
+                .findFirst();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,12 +67,13 @@ public class HomePageActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_email))).setText(email);
         ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_name))).setText(name);
-        ImageView profilePicture = ((ImageView) (navigationView.getHeaderView(0).findViewById(R.id.nav_image_profile)));
+        ImageView profilePicture = navigationView.getHeaderView(0).findViewById(R.id.nav_image_profile);
+
         if (account.imageURL != null) {
             Picasso.get().load(Uri.parse(account.imageURL)).into(profilePicture);
         }
 
-        if (account.type.equals("Provider")) {
+        if (account.type.equals(getString(R.string.provider))) {
             //PROVIDER
             clientSearch.hide();
             hideClientSpecificMenuItems();
@@ -90,6 +98,14 @@ public class HomePageActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home_page, menu);
+        //from notification
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        if (intent.hasExtra(NOTIFICATION) && intent.getStringExtra(NOTIFICATION).equals(getString(R.string.provider).toLowerCase())) {
+            navController.navigate(R.id.nav_pending_appointments);
+        }
+        if (intent.hasExtra(NOTIFICATION) && intent.getStringExtra(NOTIFICATION).equals(getString(R.string.client).toLowerCase())) {
+            navController.navigate(R.id.nav_future_appointments);
+        }
         return true;
     }
 

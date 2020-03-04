@@ -76,7 +76,7 @@ public class NewAppointmentFragment extends Fragment {
                             .stream()
                             .filter(a -> a.start_time.contains(chosenDay.toString().substring(0, 9)))//month and day
                             .filter(a -> a.start_time.contains(chosenDay.toString().substring(30, 33))) //year
-                            .filter(a -> a.status.contains("accepted"))
+                            .filter(a -> a.status.contains(getString(R.string.accepted)))
                             .collect(Collectors.toList()); //sorted
 
                     calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(schedules.get().getStart_time()));
@@ -88,7 +88,7 @@ public class NewAppointmentFragment extends Fragment {
                     Long i = start_time;
                     int poz = 0;
 
-                    while (i < end_time) {
+                    while (i <= end_time - duration) {
                         if (poz == appointmentsList.size()) {
                             calendar.setTimeInMillis(i);
                             String minute = String.valueOf(calendar.get(Calendar.MINUTE));
@@ -122,11 +122,15 @@ public class NewAppointmentFragment extends Fragment {
                         i = appointment_end_time;
                         poz++;
                     }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, availableTimeTables);
-                    dropdownTimeTable.setAdapter(adapter);
+                    if (availableTimeTables.size() != 0) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, availableTimeTables);
+                        dropdownTimeTable.setAdapter(adapter);
+                        return;
+                    }
                 }
             }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{"nothing"});
+            dropdownTimeTable.setAdapter(adapter);
         });
 
         Button bookButton = view.findViewById(R.id.book_appointment_button);
@@ -151,7 +155,7 @@ public class NewAppointmentFragment extends Fragment {
             appointmentsBox.attach(appointments);
             appointments.setStart_time(start_time.toString());
             appointments.setEnd_time(end_time.toString());
-            appointments.setStatus("pending");
+            appointments.setStatus(getString(R.string.pending));
             appointments.client.setTarget(client);
             appointments.provider_service.setTarget(provider_service);
             client.appointments.add(appointments);
@@ -174,19 +178,19 @@ public class NewAppointmentFragment extends Fragment {
         String weekday;
         switch (day) {
             case Calendar.MONDAY:
-                weekday = "Monday";
+                weekday = getString(R.string.monday);
                 break;
             case Calendar.TUESDAY:
-                weekday = "Tuesday";
+                weekday = getString(R.string.tuesday);
                 break;
             case Calendar.WEDNESDAY:
-                weekday = "Wednesday";
+                weekday = getString(R.string.wednesday);
                 break;
             case Calendar.THURSDAY:
-                weekday = "Thursday";
+                weekday = getString(R.string.thursday);
                 break;
             case Calendar.FRIDAY:
-                weekday = "Friday";
+                weekday = getString(R.string.friday);
                 break;
             default:
                 weekday = "no schedule";

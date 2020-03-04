@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.easyappointment.Activities.login.LoginActivity;
@@ -15,8 +14,6 @@ import com.example.easyappointment.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 public class SignOutFragment extends Fragment {
     private static final String SIGN_OUT = "sign_out";
@@ -40,18 +37,9 @@ public class SignOutFragment extends Fragment {
         // Build a GoogleSignInClient with the options specified by gso.
         final GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this.getContext(), gso);
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        //On Succesfull signout we navigate the user back to LoginActivity
-                        signOut();
-                    }
-                });
-            }
-        });
+        signOut.setOnClickListener(v -> googleSignInClient.signOut().addOnCompleteListener(task -> {
+            signOut();
+        }));
         return view;
     }
 

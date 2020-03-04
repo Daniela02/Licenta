@@ -44,19 +44,30 @@ public class SearchForProviderFragment extends Fragment {
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
         HomePageActivity host = (HomePageActivity) getActivity();
+
         if (getArguments() != null) {
             view.findViewById(R.id.searchBarEditText).setVisibility(View.GONE);
             view.findViewById(R.id.searchButton).setVisibility(View.GONE);
+
             String categoryName = getArguments().getString("category_name");
+
             Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
             Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
-            Category category = categoryBox.query().equal(Category_.category_name, categoryName).build().findFirst();
-            List<Provider> providerList = providerBox.query().equal(Provider_.categoryId, category.category_id).build().find();
+
+            Category category = categoryBox
+                    .query().equal(Category_.category_name, categoryName)
+                    .build()
+                    .findFirst();
+            List<Provider> providerList = providerBox
+                    .query()
+                    .equal(Provider_.categoryId, category.category_id)
+                    .build()
+                    .find();
             mAdapter = new ListProvidersAdapter(providerList, host);
             recyclerView.setAdapter(mAdapter);
         }
 
-        if (host.account.type.contains("Client")) {
+        if (host.account.type.contains(host.getString(R.string.client))) {
 
             EditText searchedText = view.findViewById(R.id.searchBarEditText);
             Button searchButton = view.findViewById(R.id.searchButton);
@@ -64,19 +75,24 @@ public class SearchForProviderFragment extends Fragment {
 
                 String searchedName = searchedText.getText().toString();
                 Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
+
                 long[] accountList = accountBox.query()
-                        .equal(Account_.type, "Provider")
+                        .equal(Account_.type, host.getString(R.string.provider))
                         .contains(Account_.name, searchedName)
                         .build().findIds();
+
                 Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
-                List<Provider> providerList = providerBox.query().in(Provider_.accountId, accountList).build().find();
+
+                List<Provider> providerList = providerBox
+                        .query()
+                        .in(Provider_.accountId, accountList)
+                        .build()
+                        .find();
+
                 mAdapter = new ListProvidersAdapter(providerList, host);
                 recyclerView.setAdapter(mAdapter);
-
             });
-
         }
-
         return view;
     }
 

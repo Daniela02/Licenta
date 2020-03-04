@@ -2,7 +2,6 @@ package com.example.easyappointment.Activities.createNewAccount;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,46 +36,38 @@ public class ChooseTypeActivity extends AppCompatActivity {
         final String image = chooseIntent.getStringExtra(ACCOUNT_IMAGE);
 
 
-        clientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //CREATING THE NEW ACCOUNT
-                Account account = new Account(email, name);
-                account.setType("Client");
-                account.setImageURL(image);
+        clientButton.setOnClickListener(v -> {
+            //CREATING THE NEW ACCOUNT
+            Account account = new Account(email, name);
+            account.setType(getString(R.string.client));
+            account.setImageURL(image);
 
-                Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
+            Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
 
-                accountBox.put(account);
-                //CREATING THE NEW CLIENT
+            accountBox.put(account);
+            //CREATING THE NEW CLIENT
 
-                Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
-                Client client = new Client();
-                clientBox.attach(client);
-                client.account.setTarget(account);
+            Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
+            Client client = new Client();
+            clientBox.attach(client);
+            client.account.setTarget(account);
 
-                clientBox.put(client);
-                long var = clientBox.query().build().findFirst().account.getTargetId();
-
-                //profile activity
-                Intent homeIntent = new Intent(ChooseTypeActivity.this, HomePageActivity.class);
-                homeIntent.putExtra(HomePageActivity.EMAIL, email);
-                homeIntent.putExtra(HomePageActivity.NAME, name);
-                startActivity(homeIntent);
-                finish();
-            }
+            clientBox.put(client);
+            //home page
+            Intent homeIntent = new Intent(ChooseTypeActivity.this, HomePageActivity.class);
+            homeIntent.putExtra(HomePageActivity.EMAIL, email);
+            homeIntent.putExtra(HomePageActivity.NAME, name);
+            startActivity(homeIntent);
+            finish();
         });
 
-        providerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        providerButton.setOnClickListener(v -> {
 
-                Intent providerIntent = new Intent(ChooseTypeActivity.this, CustomizeProviderActivity.class);
-                providerIntent.putExtra(CustomizeProviderActivity.EMAIL, email);
-                providerIntent.putExtra(CustomizeProviderActivity.NAME, name);
-                startActivity(providerIntent);
-                finish();
-            }
+            Intent providerIntent = new Intent(ChooseTypeActivity.this, CustomizeProviderActivity.class);
+            providerIntent.putExtra(CustomizeProviderActivity.EMAIL, email);
+            providerIntent.putExtra(CustomizeProviderActivity.NAME, name);
+            startActivity(providerIntent);
+            finish();
         });
 
     }

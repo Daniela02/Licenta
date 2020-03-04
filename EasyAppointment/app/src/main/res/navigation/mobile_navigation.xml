@@ -92,6 +92,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/client_profile"
+        android:name="com.example.easyappointment.Fragments.ProviderSpecific.ClientProfileFragment"
+        android:label="Client Profile"
+        tools:layout="@layout/fragment_client_profile">
+        <argument
+            android:name="client_id"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
         android:id="@+id/new_appointment"
         android:name="com.example.easyappointment.Fragments.ClientSpecific.NewAppointmentFragment"
         android:label="New Appointment"

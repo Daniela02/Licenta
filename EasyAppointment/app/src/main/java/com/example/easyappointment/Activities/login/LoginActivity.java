@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easyappointment.Activities.createNewAccount.ChooseTypeActivity;
 import com.example.easyappointment.Activities.homePage.HomePageActivity;
+import com.example.easyappointment.BackgroundServices.SendClientNotificationService;
+import com.example.easyappointment.BackgroundServices.SendProviderNotificationService;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.Appointments;
 import com.example.easyappointment.data.Models.ObjectBox;
@@ -37,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "AndroidClarified";
     private static final String  SIGN_OUT = "sign_out";
+    private static final String ACCOUNT_ID = "account_id";
+    private static Account account;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,15 +55,6 @@ public class LoginActivity extends AppCompatActivity {
 
         final GoogleSignInClient googleSignInClient;
         final SignInButton googleSignInButton;
-
-        //TODO DELETE
-//        ObjectBox.get().boxFor(Account.class).removeAll();
-//        ObjectBox.get().boxFor(Provider.class).removeAll();
-//        ObjectBox.get().boxFor(Client.class).removeAll();
-//        ObjectBox.get().boxFor(Schedules.class).removeAll();
-//        ObjectBox.get().boxFor(Category.class).removeAll();
-//        ObjectBox.get().boxFor(Provider_Service.class).removeAll();
-//        ObjectBox.get().boxFor(Service.class).removeAll();
 
         Log.d("Verificare bd", ObjectBox.get().boxFor(Account.class).getAll().toString());
         Log.d("Verificare bd", ObjectBox.get().boxFor(Provider.class).getAll().toString());
@@ -126,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
         else {
-            Account account = accountBox.query().equal(Account_.name, name).equal(Account_.email, email).build().findFirst();
+            account = accountBox.query().equal(Account_.name, name).equal(Account_.email, email).build().findFirst();
             account.setImageURL(image);
             accountBox.put(account);
             Intent intent = new Intent(this, HomePageActivity.class);
@@ -148,6 +144,28 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "Not logged in");
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent providerNotificationServiceIntent = new Intent(this, SendProviderNotificationService.class);
+        Intent clientNotificationServiceIntent = new Intent(this, SendClientNotificationService.class);
+        if (account != null && account.type.contains(getString(R.string.provider))) {
+            providerNotificationServiceIntent.putExtra(ACCOUNT_ID, account.account_id);
+            startService(providerNotificationServiceIntent);
+            stopService(clientNotificationServiceIntent);
+        }
+
+        if (account != null && account.type.contains(getString(R.string.client))) {
+            clientNotificationServiceIntent.putExtra(ACCOUNT_ID, account.account_id);
+            startService(clientNotificationServiceIntent);
+            stopService(providerNotificationServiceIntent);
+        }
+    }
+
+    public void closeApp(View view) {
+        finish();
     }
 
     public void categoriesInit() {

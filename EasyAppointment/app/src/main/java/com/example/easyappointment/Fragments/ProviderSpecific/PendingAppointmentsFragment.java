@@ -40,7 +40,7 @@ public class PendingAppointmentsFragment extends Fragment {
         HomePageActivity host = (HomePageActivity) getActivity();
         recyclerView = view.findViewById(R.id.pendingAppointmentsRecycleView);
 
-        if (host.account.type.contains("Provider")) {
+        if (host.account.type.contains(host.getString(R.string.provider))) {
             Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
             Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
 
@@ -48,7 +48,7 @@ public class PendingAppointmentsFragment extends Fragment {
             recyclerView.setLayoutManager(layoutManager);
             List<Appointments> appointmentsList = provider.getAppointments()
                     .stream()
-                    .filter(a -> a.status.contains("pending"))
+                    .filter(a -> a.status.contains(host.getString(R.string.pending)))
                     .collect(Collectors.toList());
             mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false, host);
             recyclerView.setAdapter(mAdapter);

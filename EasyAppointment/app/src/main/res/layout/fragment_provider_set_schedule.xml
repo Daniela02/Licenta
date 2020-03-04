@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/scheduleTextView"
             android:layout_marginTop="15dp"
-            android:text="Monday"
+            android:text="@string/monday"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/monTextView"
             android:layout_marginTop="15dp"
-            android:text="Tuesday"
+            android:text="@string/tuesday"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp" />
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tuesTextView"
             android:layout_marginTop="15dp"
-            android:text="Wednesday"
+            android:text="@string/wednesday"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp" />
 
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/wedTextView"
             android:layout_marginTop="15dp"
-            android:text="Thursday"
+            android:text="@string/thursday"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp" />
 
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/thursTextView"
             android:layout_marginTop="15dp"
-            android:text="Friday"
+            android:text="@string/friday"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp" />
 
@@ -78,7 +78,7 @@
             android:layout_marginLeft="60dp"
             android:layout_toRightOf="@id/monTextView"
             android:ems="5"
-            android:hint="Start Time"
+            android:hint="@string/start_time"
             android:inputType="time" />
 
         <EditText
@@ -91,7 +91,7 @@
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/monStartTime"
             android:ems="5"
-            android:hint="End Time"
+            android:hint="@string/end_time"
             android:inputType="time" />
 
         <EditText
@@ -103,7 +103,7 @@
             android:layout_marginLeft="60dp"
             android:layout_toRightOf="@id/monTextView"
             android:ems="5"
-            android:hint="Start Time"
+            android:hint="@string/start_time"
             android:inputType="time" />
 
         <EditText
@@ -116,7 +116,7 @@
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/tuesStartTime"
             android:ems="5"
-            android:hint="End Time"
+            android:hint="@string/end_time"
             android:inputType="time" />
 
         <EditText
@@ -128,7 +128,7 @@
             android:layout_marginLeft="60dp"
             android:layout_toRightOf="@id/monTextView"
             android:ems="5"
-            android:hint="Start Time"
+            android:hint="@string/start_time"
             android:inputType="time" />
 
         <EditText
@@ -141,7 +141,7 @@
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/wedStartTime"
             android:ems="5"
-            android:hint="End Time"
+            android:hint="@string/end_time"
             android:inputType="time" />
 
         <EditText
@@ -153,7 +153,7 @@
             android:layout_marginLeft="60dp"
             android:layout_toRightOf="@id/monTextView"
             android:ems="5"
-            android:hint="Start Time"
+            android:hint="@string/start_time"
             android:inputType="time" />
 
         <EditText
@@ -166,7 +166,7 @@
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/monStartTime"
             android:ems="5"
-            android:hint="End Time"
+            android:hint="@string/end_time"
             android:inputType="time" />
 
         <EditText
@@ -178,7 +178,7 @@
             android:layout_marginLeft="60dp"
             android:layout_toRightOf="@id/monTextView"
             android:ems="5"
-            android:hint="Start Time"
+            android:hint="@string/start_time"
             android:inputType="time" />
 
         <EditText
@@ -191,7 +191,7 @@
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/monStartTime"
             android:ems="5"
-            android:hint="End Time"
+            android:hint="@string/end_time"
             android:inputType="time" />
 
         <Button
@@ -200,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friEndTime"
             android:layout_marginTop="15dp"
-            android:text="Submit"
+            android:text="@string/submit"
             android:visibility="gone" />
 
     </RelativeLayout>

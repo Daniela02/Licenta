@@ -77,7 +77,7 @@ public class Provider {
         appointments.sort((a1, a2) -> {
             Date startTime1 = new Date(a1.start_time);
             Date startTime2 = new Date(a2.start_time);
-            if (startTime1.before(startTime2)) {
+            if (startTime1.after(startTime2)) {
                 return 1;
             }
             if (startTime1.equals(startTime2)) {

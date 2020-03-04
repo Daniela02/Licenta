@@ -62,7 +62,7 @@ public class ListProvidersAdapter extends RecyclerView.Adapter {
             this.providerName = itemView.findViewById(R.id.show_provider_name);
             this.providerCategory = itemView.findViewById(R.id.show_provider_category);
             this.host = host;
-            this.profilePicture = ((ImageView) (itemView.findViewById(R.id.provider_photo_search)));
+            this.profilePicture = itemView.findViewById(R.id.provider_photo_search);
 
             itemView.setOnClickListener(this::onClick);
         }

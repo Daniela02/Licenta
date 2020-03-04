@@ -44,9 +44,15 @@ public class AppointmentsHistoryFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        if (host.account.type.contains("Client")) {
+        if (host.account.type.contains(host.getString(R.string.client))) {
             Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
-            Client client = clientBox.query().equal(Client_.accountId, host.account.account_id).build().findFirst();
+
+            Client client = clientBox
+                    .query()
+                    .equal(Client_.accountId, host.account.account_id)
+                    .build()
+                    .findFirst();
+
             List<Appointments> appointmentsList = client.getAppointments()
                     .stream()
                     .filter(a -> (new Date(a.start_time).before(now)))

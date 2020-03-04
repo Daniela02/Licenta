@@ -46,7 +46,7 @@ public class PersonalDetailsFragment extends Fragment {
 
             submitButton.setOnClickListener(v -> {
 
-                if (host.account.type.equals("Provider")) {
+                if (host.account.type.equals(host.getString(R.string.provider))) {
                     //PROVIDER
                     //GETTING NEW INFO
                     String phone = ((EditText) view.findViewById(R.id.editPhone)).getText().toString();

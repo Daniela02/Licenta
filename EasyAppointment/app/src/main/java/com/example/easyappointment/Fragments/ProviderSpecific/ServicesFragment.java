@@ -35,7 +35,7 @@ public class ServicesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_services, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.servicesRecycleView);
+        recyclerView = view.findViewById(R.id.servicesRecycleView);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -44,7 +44,11 @@ public class ServicesFragment extends Fragment {
 
         Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
 
-        Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
+        Provider provider = providerBox
+                .query().equal(Provider_.accountId, host.account.account_id)
+                .build()
+                .findFirst();
+
         List<Service> servicesList = provider.getServices();
         mAdapter = new ListServiceAdapter(servicesList, false, host);
         recyclerView.setAdapter(mAdapter);

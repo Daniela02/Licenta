@@ -1,17 +1,22 @@
 package com.example.easyappointment.data.Adapters;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easyappointment.Activities.homePage.HomePageActivity;
+import com.example.easyappointment.GoogleApi.GoogleCalendar;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.Appointments;
 import com.example.easyappointment.data.Models.ObjectBox;
@@ -60,11 +65,12 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
         private Button cancelButton;
         private Button acceptButton;
         private TextView serviceName;
-        private TextView providerName;
+        private TextView providerOrClientName;
         private TextView startTime;
         private TextView status;
         private LinearLayout appointmentLayout;
         private HomePageActivity host;
+        private Long clientId;
 
         public ListViewHolder(@NonNull View itemView, List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory, HomePageActivity host) {
             super(itemView);
@@ -74,7 +80,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
             this.cancelButton = itemView.findViewById(R.id.appointment_cancel_button);
             this.acceptButton = itemView.findViewById(R.id.appointment_accept_button);
             this.serviceName = itemView.findViewById(R.id.appointment_service_name);
-            this.providerName = itemView.findViewById(R.id.appointment_provider);
+            this.providerOrClientName = itemView.findViewById(R.id.appointment_provider);
             this.startTime = itemView.findViewById(R.id.appointment_start_time);
             this.status = itemView.findViewById(R.id.appointment_status);
             this.host = host;
@@ -82,39 +88,49 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(this::onClick);
         }
 
-
         @Override
         public void onClick(View v) {
-
+            if (isProvider) {
+                NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
+                Bundle bundle = new Bundle();
+                bundle.putString("client_id", clientId.toString());
+                navController.navigate(R.id.client_profile, bundle);
+            }
         }
 
         public void bindView(int poz) {
             Appointments appointment = appointmentsList.get(poz);
 
+            clientId = appointment.client.getTarget().client_id;
+
             serviceName.setText(appointment.provider_service.getTarget().service.getTarget().name);
-            providerName.setText(appointment.provider_service.getTarget().provider.getTarget().account.getTarget().name);
+            providerOrClientName.setText(appointment.provider_service.getTarget().provider.getTarget().account.getTarget().name);
             startTime.setText(appointment.start_time);
             status.setText(appointment.status);
-            if (appointment.status.equals("pending")) {
+            if (appointment.status.equals(host.getString(R.string.pending))) {
                 status.setTextColor(ContextCompat.getColor(host, R.color.colorPrimary));
             }
             if (isProvider) {
+                Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
+                appointment.seenByProvider = true;
+                appointmentsBox.put(appointment);
+
+                providerOrClientName.setText(appointment.client.getTarget().account.getTarget().name);
 
                 cancelButton.setOnClickListener(v -> {
                     Provider_Service provider_service = appointment.provider_service.getTarget();
                     provider_service.appointments.remove(appointment);
 
-                    Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
                     appointmentsBox.remove(appointment);
 
                     serviceName.setVisibility(View.GONE);
-                    providerName.setVisibility(View.GONE);
+                    providerOrClientName.setVisibility(View.GONE);
                     startTime.setVisibility(View.GONE);
                     cancelButton.setVisibility(View.GONE);
                     status.setVisibility(View.GONE);
                 });
 
-                if (appointment.status.contains("accepted")) {
+                if (appointment.status.contains(host.getString(R.string.accepted))) {
                     //ACCEPTED APPOINTMENTS
                     acceptButton.setVisibility(View.GONE);
                     status.setVisibility(View.GONE);
@@ -123,39 +139,53 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                     status.setVisibility(View.VISIBLE);
                     acceptButton.setOnClickListener(v -> {
                         appointmentLayout.setVisibility(View.GONE);
-                        appointment.setStatus("accepted");
-                        Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
+                        appointment.setStatus(host.getString(R.string.accepted));
                         status.setText(appointment.status);
+                        appointment.seenByClient = false;
                         appointmentsBox.put(appointment);
+
+                        //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
+                        GoogleCalendar googleCalendar = new GoogleCalendar(host);
+                        googleCalendar.createProviderCalendarEvent(appointment);
+
+                        Toast.makeText(host, "Event created in Google Calendar", Toast.LENGTH_SHORT).show();
                     });
                 }
 
             } else {
                 //CLIENT
+                Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
 
                 if (showHistory == false) {//Future
                     status.setVisibility(View.VISIBLE);
+
                     cancelButton.setOnClickListener(v -> {
                         Provider_Service provider_service = appointment.provider_service.getTarget();
                         provider_service.appointments.remove(appointment);
-
-                        Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
                         appointmentsBox.remove(appointment);
-
                         serviceName.setVisibility(View.GONE);
-                        providerName.setVisibility(View.GONE);
+                        providerOrClientName.setVisibility(View.GONE);
                         startTime.setVisibility(View.GONE);
                         cancelButton.setVisibility(View.GONE);
                         status.setVisibility(View.GONE);
-
                     });
+
                     acceptButton.setVisibility(View.GONE);
+
+                    if (appointment.status.equals(host.getString(R.string.accepted)) && appointment.seenByClient.equals(false)) {
+                        //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
+                        GoogleCalendar googleCalendar = new GoogleCalendar(host);
+                        googleCalendar.createClientCalendarEvent(appointment);
+                        Toast.makeText(host, "Event created in Google Calendar", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     status.setVisibility(View.GONE);
                     cancelButton.setVisibility(View.GONE);
                     acceptButton.setVisibility(View.GONE);
                 }
 
+                appointment.seenByClient = true;
+                appointmentsBox.put(appointment);
             }
         }
     }

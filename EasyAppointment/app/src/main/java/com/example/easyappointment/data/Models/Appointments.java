@@ -15,6 +15,8 @@ public class Appointments {
     public String status; //pending, booked
     public String start_time;
     public String end_time;
+    public Boolean seenByProvider = false;
+    public Boolean seenByClient = false;
 
     public Appointments() {
     }
@@ -73,6 +75,8 @@ public class Appointments {
                 ", status='" + status + '\'' +
                 ", start_time='" + start_time + '\'' +
                 ", end_time='" + end_time + '\'' +
+                ", seenByProvider='" + seenByProvider + '\'' +
+                ", seenByClient='" + seenByClient + '\'' +
                 '}';
     }
 }

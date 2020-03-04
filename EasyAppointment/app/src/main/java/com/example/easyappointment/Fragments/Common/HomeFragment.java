@@ -32,6 +32,11 @@ import java.util.stream.Collectors;
 
 import io.objectbox.Box;
 
+/*
+Icons made by "https://www.flaticon.com/authors/dinosoftlabs"
+Icons made by "https://www.flaticon.com/authors/freepik"
+Icons made by "https://www.flaticon.com/authors/kiranshastry"
+ */
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -51,10 +56,14 @@ public class HomeFragment extends Fragment {
         HomePageActivity host = (HomePageActivity) getActivity();
         recyclerView = view.findViewById(R.id.homePageRecycleView);
 
-        if (host.account.type.contains("Provider")) {
+        if (host.account.type.contains(getString(R.string.provider))) {
             view.findViewById(R.id.search_by_category_TextView).setVisibility(View.GONE);
             Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
-            Provider provider = providerBox.query().equal(Provider_.accountId, host.account.account_id).build().findFirst();
+            Provider provider = providerBox
+                    .query()
+                    .equal(Provider_.accountId, host.account.account_id)
+                    .build()
+                    .findFirst();
 
             layoutManager = new LinearLayoutManager(this.getContext());
             recyclerView.setLayoutManager(layoutManager);
@@ -62,12 +71,12 @@ public class HomeFragment extends Fragment {
             List<Appointments> appointmentsList = provider.getAppointments()
                     .stream()
                     .filter(a -> (new Date(a.start_time).after(now)))
-                    .filter(a -> a.status.contains("accepted"))
+                    .filter(a -> a.status.contains(getString(R.string.accepted)))
                     .collect(Collectors.toList());
             mAdapter = new ListAppointmentsAdapter(appointmentsList, true, false, host);
             recyclerView.setAdapter(mAdapter);
         }
-        if (host.account.type.contains("Client")) {
+        if (host.account.type.contains(getString(R.string.client))) {
             view.findViewById(R.id.accepted_appointments_TextView).setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
 

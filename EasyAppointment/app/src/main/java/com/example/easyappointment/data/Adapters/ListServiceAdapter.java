@@ -1,7 +1,6 @@
 package com.example.easyappointment.data.Adapters;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,8 +87,6 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
             this.host = host;
 
             itemView.setOnClickListener(this::onClick);
-
-            Log.d("Adapter ", servicesList.toString());
         }
 
 
@@ -180,7 +177,7 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
 
                     serviceName.setText(service.name);
                     serviceDescription.setText(service.description);
-                    serviceDuration.setText(service.duration + " h");
+                    serviceDuration.setText(service.duration + " min");
                 });
             }
 
