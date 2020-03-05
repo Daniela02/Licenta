@@ -1,7 +1,10 @@
 package com.example.easyappointment.Fragments.Common;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +29,6 @@ import com.example.easyappointment.data.Models.accounts.Provider_;
 import com.example.easyappointment.data.Models.providerSpecifics.Category;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,10 +44,14 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private HashMap<String, Integer> imageMap;
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+
+    public static int dpToPx(int dp, Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 
     @Override
@@ -83,13 +89,15 @@ public class HomeFragment extends Fragment {
             GridLayout gridLayout = view.findViewById(R.id.category_GridLayout);
             Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
             List<Category> categoryList = categoryBox.getAll();
-            initImageMap(categoryList);
             gridLayout.removeAllViews();
             int total = categoryList.size();
             int column = 2;
             int row = total / column;
             gridLayout.setColumnCount(column);
             gridLayout.setRowCount(row + 1);
+
+            SharedPreferences pref = host.getSharedPreferences("Pref", 0);
+
             for (int i = 0, c = 0, r = 0; i < total; i++, c++) {
                 if (c == column) {
                     c = 0;
@@ -98,29 +106,29 @@ public class HomeFragment extends Fragment {
                 TextView category = new TextView(this.getContext());
                 ImageView photo = new ImageView(this.getContext());
                 String category_name = categoryList.get(i).category_name;
-                photo.setImageResource(imageMap.get(category_name));
+                photo.setImageResource(pref.getInt(category_name, -1));
                 photo.setOnClickListener(v -> {
                     NavController navController = Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment);
                     Bundle bundle = new Bundle();
                     bundle.putString("category_name", category_name);
                     navController.navigate(R.id.client_search, bundle);
                 });
-                photo.setPadding(15, 5, 15, 5);
+                photo.setPadding(dpToPx(5, host), dpToPx(5, host), dpToPx(5, host), dpToPx(5, host));
                 category.setText(category_name);
-                category.setTextSize(17);
+                category.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
                 category.setTypeface(null, Typeface.BOLD);
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
                 param.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 param.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                param.leftMargin = 15;
-                param.rightMargin = 15;
-                param.topMargin = 20;
+                param.leftMargin = dpToPx(15, host);
+                param.rightMargin = dpToPx(15, host);
+                param.topMargin = dpToPx(20, host);
                 param.setGravity(Gravity.CENTER);
                 param.columnSpec = GridLayout.spec(c);
                 param.rowSpec = GridLayout.spec(r);
                 category.setLayoutParams(param);
-                param.height = 450;
-                param.width = 300;
+                param.height = dpToPx(250, host);
+                param.width = dpToPx(150, host);
                 photo.setLayoutParams(param);
                 gridLayout.addView(category);
                 gridLayout.addView(photo);
@@ -128,14 +136,5 @@ public class HomeFragment extends Fragment {
 
         }
         return view;
-    }
-
-    private void initImageMap(List<Category> categoryList) {
-        imageMap = new HashMap<>();
-        imageMap.put(categoryList.get(0).category_name, R.drawable.car);
-        imageMap.put(categoryList.get(1).category_name, R.drawable.women_beauty);
-        imageMap.put(categoryList.get(2).category_name, R.drawable.doctors);
-        imageMap.put(categoryList.get(3).category_name, R.drawable.barbers);
-
     }
 }

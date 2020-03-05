@@ -1,5 +1,7 @@
 package com.example.easyappointment.data.Adapters;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.example.easyappointment.GoogleApi.GoogleCalendar;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.Appointments;
 import com.example.easyappointment.data.Models.ObjectBox;
+import com.example.easyappointment.data.Models.accounts.Provider;
 import com.example.easyappointment.data.Models.providerSpecifics.Provider_Service;
 
 import java.util.List;
@@ -70,6 +73,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
         private TextView status;
         private LinearLayout appointmentLayout;
         private HomePageActivity host;
+        private LinearLayout getDirections;
         private Long clientId;
 
         public ListViewHolder(@NonNull View itemView, List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory, HomePageActivity host) {
@@ -83,6 +87,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
             this.providerOrClientName = itemView.findViewById(R.id.appointment_provider);
             this.startTime = itemView.findViewById(R.id.appointment_start_time);
             this.status = itemView.findViewById(R.id.appointment_status);
+            this.getDirections = itemView.findViewById(R.id.appointment_direction);
             this.host = host;
             this.appointmentLayout = itemView.findViewById(R.id.layout_appointment);
             itemView.setOnClickListener(this::onClick);
@@ -111,6 +116,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                 status.setTextColor(ContextCompat.getColor(host, R.color.colorPrimary));
             }
             if (isProvider) {
+                getDirections.setVisibility(View.GONE);
                 Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
                 appointment.seenByProvider = true;
                 appointmentsBox.put(appointment);
@@ -144,19 +150,29 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                         appointment.seenByClient = false;
                         appointmentsBox.put(appointment);
 
-                        //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
-                        GoogleCalendar googleCalendar = new GoogleCalendar(host);
-                        googleCalendar.createProviderCalendarEvent(appointment);
+                        if (host.hasPermitionToWriteCalendar) {
+                            //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
+                            GoogleCalendar googleCalendar = new GoogleCalendar(host);
+                            googleCalendar.createProviderCalendarEvent(appointment);
 
-                        Toast.makeText(host, "Event created in Google Calendar", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(host, "Event created in Google Calendar", Toast.LENGTH_SHORT).show();
+                        }
                     });
                 }
 
             } else {
                 //CLIENT
                 Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
+                Provider provider = appointment.provider_service.getTarget().provider.getTarget();
 
-                if (showHistory == false) {//Future
+                getDirections.setOnClickListener(v -> {
+                    Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + provider.address);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    host.startActivity(mapIntent);
+                });
+
+                if (!showHistory) {//Future
                     status.setVisibility(View.VISIBLE);
 
                     cancelButton.setOnClickListener(v -> {
@@ -172,7 +188,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
 
                     acceptButton.setVisibility(View.GONE);
 
-                    if (appointment.status.equals(host.getString(R.string.accepted)) && appointment.seenByClient.equals(false)) {
+                    if (host.hasPermitionToWriteCalendar && appointment.status.equals(host.getString(R.string.accepted)) && appointment.seenByClient.equals(false)) {
                         //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
                         GoogleCalendar googleCalendar = new GoogleCalendar(host);
                         googleCalendar.createClientCalendarEvent(appointment);

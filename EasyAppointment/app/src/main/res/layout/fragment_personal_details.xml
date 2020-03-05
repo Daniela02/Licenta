@@ -2,73 +2,81 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     tools:context=".Fragments.ProviderSpecific.PersonalDetailsFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/personalDetailsTextView"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Personal Details"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/telephoneTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/personalDetailsTextView"
-            android:layout_marginTop="15dp"
-            android:text="Telephone number"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/personalDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Personal Details"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/addressTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editPhone"
-            android:layout_marginTop="15dp"
-            android:text="Address"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/telephoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personalDetailsTextView"
+                android:layout_marginTop="5dp"
+                android:text="Telephone number"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/editPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/telephoneTextView"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="phone" />
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editPhone"
+                android:layout_marginTop="5dp"
+                android:text="Address"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/editAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/addressTextView"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentRight="false"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="textPostalAddress" />
+            <EditText
+                android:id="@+id/editPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/telephoneTextView"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="Telephone"
+                android:inputType="phone" />
 
-        <Button
-            android:id="@+id/submit_personal_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editAddress"
-            android:layout_marginTop="15dp"
-            android:text="@string/submit"
-            android:visibility="gone" />
+            <EditText
+                android:id="@+id/editAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addressTextView"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="false"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPostalAddress" />
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/submit_personal_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editAddress"
+                android:layout_marginLeft="65dp"
+                android:text="@string/submit"
+                android:visibility="gone" />
 
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

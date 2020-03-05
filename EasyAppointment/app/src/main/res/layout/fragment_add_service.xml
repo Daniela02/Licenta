@@ -5,88 +5,95 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.ProviderSpecific.AddServiceFragment">
 
-    <RelativeLayout
-        android:id="@+id/add_service_frag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/addServiceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="New Service"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:id="@+id/add_service_frag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/serviceNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/addServiceTextView"
-            android:layout_marginTop="15dp"
-            android:text="Service Name"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/addServiceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Service"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/serviceDescriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/addServiceName"
-            android:layout_marginTop="15dp"
-            android:text="Service Description"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/serviceNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addServiceTextView"
+                android:layout_marginTop="5dp"
+                android:text="Service Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/serviceDurationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/addServiceDescription"
-            android:layout_marginTop="15dp"
-            android:text="Service Duration"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/serviceDescriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addServiceName"
+                android:layout_marginTop="5dp"
+                android:text="Service Description"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/addServiceName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/serviceNameTextView"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="textPostalAddress"
-            android:textColor="@color/colorPrimary" />
+            <TextView
+                android:id="@+id/serviceDurationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addServiceDescription"
+                android:layout_marginTop="5dp"
+                android:text="Service Duration"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/addServiceDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/serviceDescriptionTextView"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
+            <EditText
+                android:id="@+id/addServiceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/serviceNameTextView"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPostalAddress"
+                android:textColor="@color/colorPrimary" />
 
-        <EditText
-            android:id="@+id/addServiceDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/serviceDurationTextView"
-            android:ems="10"
-            android:hint="Minutes"
-            android:inputType="number" />
+            <EditText
+                android:id="@+id/addServiceDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/serviceDescriptionTextView"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Description"
+                android:inputType="textMultiLine" />
 
-        <Button
-            android:id="@+id/submit_new_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/addServiceDuration"
-            android:layout_marginTop="15dp"
-            android:text="@string/submit"
-            android:visibility="gone" />
+            <EditText
+                android:id="@+id/addServiceDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/serviceDurationTextView"
+                android:ems="10"
+                android:hint="Minutes"
+                android:inputType="number" />
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/submit_new_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addServiceDuration"
+                android:layout_marginLeft="65dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/submit"
+                android:visibility="gone" />
 
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

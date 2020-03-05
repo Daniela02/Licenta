@@ -151,7 +151,7 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
 
                     editServiceName.setText(service.name);
                     editServiceDescription.setText(service.description);
-                    editServiceDuration.setText(service.duration);
+                    editServiceDuration.setText(String.valueOf(service.duration));
                 });
 
                 submitButton.setOnClickListener(v -> {

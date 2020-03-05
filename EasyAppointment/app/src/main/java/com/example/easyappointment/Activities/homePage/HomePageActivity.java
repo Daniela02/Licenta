@@ -1,6 +1,8 @@
 package com.example.easyappointment.Activities.homePage;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import io.objectbox.Box;
 
+import static com.example.easyappointment.GoogleApi.GoogleCalendar.MY_PERMISSION_WRITE_CALENDAR;
+
 public class HomePageActivity extends AppCompatActivity {
 
     public static final String NAME = "NAME";
@@ -34,11 +39,23 @@ public class HomePageActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
     public Account account;
+    public boolean hasPermitionToWriteCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            hasPermitionToWriteCalendar = false;
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSION_WRITE_CALENDAR);
+            }
+        } else {
+            hasPermitionToWriteCalendar = true;
+        }
+
         intent = getIntent();
         String email = intent.getStringExtra(EMAIL);
         String name = intent.getStringExtra(NAME);
@@ -114,6 +131,21 @@ public class HomePageActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_WRITE_CALENDAR: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    hasPermitionToWriteCalendar = true;
+                } else {
+                    hasPermitionToWriteCalendar = false;
+                }
+                return;
+            }
+        }
     }
 
     public void hideProviderSpecificMenuItems() {

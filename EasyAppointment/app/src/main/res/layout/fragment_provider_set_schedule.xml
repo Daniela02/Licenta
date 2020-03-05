@@ -5,205 +5,211 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.ProviderSpecific.ProviderSetScheduleFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/scheduleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Daily Schedule"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/monTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/scheduleTextView"
-            android:layout_marginTop="15dp"
-            android:text="@string/monday"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/scheduleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Daily Schedule"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tuesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/monTextView"
-            android:layout_marginTop="15dp"
-            android:text="@string/tuesday"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/monTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scheduleTextView"
+                android:layout_marginTop="15dp"
+                android:text="@string/monday"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/wedTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tuesTextView"
-            android:layout_marginTop="15dp"
-            android:text="@string/wednesday"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/tuesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/monTextView"
+                android:layout_marginTop="15dp"
+                android:text="@string/tuesday"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/thursTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/wedTextView"
-            android:layout_marginTop="15dp"
-            android:text="@string/thursday"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/wedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tuesTextView"
+                android:layout_marginTop="15dp"
+                android:text="@string/wednesday"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/friTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/thursTextView"
-            android:layout_marginTop="15dp"
-            android:text="@string/friday"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/thursTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wedTextView"
+                android:layout_marginTop="15dp"
+                android:text="@string/thursday"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/monStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/scheduleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="60dp"
-            android:layout_toRightOf="@id/monTextView"
-            android:ems="5"
-            android:hint="@string/start_time"
-            android:inputType="time" />
+            <TextView
+                android:id="@+id/friTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/thursTextView"
+                android:layout_marginTop="15dp"
+                android:text="@string/friday"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/monEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/scheduleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@id/monStartTime"
-            android:ems="5"
-            android:hint="@string/end_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/monStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scheduleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="60dp"
+                android:layout_toRightOf="@id/monTextView"
+                android:ems="5"
+                android:hint="@string/start_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/tuesStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/monTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="60dp"
-            android:layout_toRightOf="@id/monTextView"
-            android:ems="5"
-            android:hint="@string/start_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/monEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scheduleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/monStartTime"
+                android:ems="5"
+                android:hint="@string/end_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/tuesEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/monTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@id/tuesStartTime"
-            android:ems="5"
-            android:hint="@string/end_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/tuesStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/monTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="60dp"
+                android:layout_toRightOf="@id/monTextView"
+                android:ems="5"
+                android:hint="@string/start_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/wedStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tuesEndTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="60dp"
-            android:layout_toRightOf="@id/monTextView"
-            android:ems="5"
-            android:hint="@string/start_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/tuesEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/monTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/tuesStartTime"
+                android:ems="5"
+                android:hint="@string/end_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/wedEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tuesEndTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@id/wedStartTime"
-            android:ems="5"
-            android:hint="@string/end_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/wedStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tuesEndTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="60dp"
+                android:layout_toRightOf="@id/monTextView"
+                android:ems="5"
+                android:hint="@string/start_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/thursStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/wedStartTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="60dp"
-            android:layout_toRightOf="@id/monTextView"
-            android:ems="5"
-            android:hint="@string/start_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/wedEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tuesEndTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/wedStartTime"
+                android:ems="5"
+                android:hint="@string/end_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/thursEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/wedEndTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@id/monStartTime"
-            android:ems="5"
-            android:hint="@string/end_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/thursStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wedStartTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="60dp"
+                android:layout_toRightOf="@id/monTextView"
+                android:ems="5"
+                android:hint="@string/start_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/friStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/thursStartTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="60dp"
-            android:layout_toRightOf="@id/monTextView"
-            android:ems="5"
-            android:hint="@string/start_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/thursEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wedEndTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/monStartTime"
+                android:ems="5"
+                android:hint="@string/end_time"
+                android:inputType="time" />
 
-        <EditText
-            android:id="@+id/friEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/thursEndTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@id/monStartTime"
-            android:ems="5"
-            android:hint="@string/end_time"
-            android:inputType="time" />
+            <EditText
+                android:id="@+id/friStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/thursStartTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="60dp"
+                android:layout_toRightOf="@id/monTextView"
+                android:ems="5"
+                android:hint="@string/start_time"
+                android:inputType="time" />
 
-        <Button
-            android:id="@+id/submit_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/friEndTime"
-            android:layout_marginTop="15dp"
-            android:text="@string/submit"
-            android:visibility="gone" />
+            <EditText
+                android:id="@+id/friEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/thursEndTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/monStartTime"
+                android:ems="5"
+                android:hint="@string/end_time"
+                android:inputType="time" />
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/submit_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/friEndTime"
+                android:layout_marginLeft="135dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/submit"
+                android:visibility="gone" />
 
+        </RelativeLayout>
+    </ScrollView>
 
 </FrameLayout>

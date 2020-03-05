@@ -51,5 +51,6 @@ public class SignOutFragment extends Fragment {
         Intent intent = new Intent(this.getContext(), LoginActivity.class);
         intent.putExtra(SIGN_OUT, "sign out");
         startActivity(intent);
+        getActivity().finish();
     }
 }

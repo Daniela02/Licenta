@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_provider_add_service"
-            app:destination="@id/provider_add_service" />
+            app:destination="@id/provider_add_service"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment

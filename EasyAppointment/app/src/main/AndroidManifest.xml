@@ -36,7 +36,9 @@
             android:label="@string/title_activity_home_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.createNewAccount.ChooseTypeActivity" />
-        <activity android:name=".Activities.createNewAccount.asProvider.CustomizeProviderActivity" />
+        <activity
+            android:name=".Activities.createNewAccount.asProvider.CustomizeProviderActivity"
+            android:label="Customize your Account" />
 
         <meta-data
             android:name="com.google.android.actions"

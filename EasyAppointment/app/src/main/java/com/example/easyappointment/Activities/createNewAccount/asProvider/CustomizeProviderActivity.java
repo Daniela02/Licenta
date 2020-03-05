@@ -32,6 +32,7 @@ public class CustomizeProviderActivity extends AppCompatActivity {
 
     public static final String NAME = "name";
     public static final String EMAIL = "email";
+    public static final String ACCOUNT_IMAGE = "image";
     private Integer count;
     private Button nextButton;
     private Button backButton;
@@ -51,6 +52,7 @@ public class CustomizeProviderActivity extends AppCompatActivity {
 
         String email = providerIntent.getStringExtra(EMAIL);
         String name = providerIntent.getStringExtra(NAME);
+        String image = providerIntent.getStringExtra(ACCOUNT_IMAGE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -59,7 +61,6 @@ public class CustomizeProviderActivity extends AppCompatActivity {
         SelectCategoryFragment selectCategoryFragment = new SelectCategoryFragment();
         ProviderSetScheduleFragment providerSetScheduleFragment = new ProviderSetScheduleFragment();
         AddServiceFragment addServiceFragment = new AddServiceFragment();
-
         fragmentTransaction.add(R.id.customizeProviderRelativeLayout, personalDetailsFragment);
         fragmentTransaction.add(R.id.customizeProviderRelativeLayout, selectCategoryFragment);
         fragmentTransaction.hide(selectCategoryFragment);
@@ -105,6 +106,7 @@ public class CustomizeProviderActivity extends AppCompatActivity {
                     String address = ((EditText) findViewById(R.id.editAddress)).getText().toString();
 
                     account = new Account(email, name);
+                    account.setImageURL(image);
                     account.setType("Provider");
                     provider = new Provider(address, phone);
                     Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);

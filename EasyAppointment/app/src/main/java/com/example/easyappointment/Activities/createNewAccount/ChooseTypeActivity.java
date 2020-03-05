@@ -66,6 +66,7 @@ public class ChooseTypeActivity extends AppCompatActivity {
             Intent providerIntent = new Intent(ChooseTypeActivity.this, CustomizeProviderActivity.class);
             providerIntent.putExtra(CustomizeProviderActivity.EMAIL, email);
             providerIntent.putExtra(CustomizeProviderActivity.NAME, name);
+            providerIntent.putExtra(CustomizeProviderActivity.ACCOUNT_IMAGE, image);
             startActivity(providerIntent);
             finish();
         });

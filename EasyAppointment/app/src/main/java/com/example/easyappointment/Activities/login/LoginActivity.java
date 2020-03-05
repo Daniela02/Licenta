@@ -2,6 +2,7 @@ package com.example.easyappointment.Activities.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -170,10 +171,22 @@ public class LoginActivity extends AppCompatActivity {
 
     public void categoriesInit() {
         Box<Category> categoryBox = ObjectBox.get().boxFor(Category.class);
-        categoryBox.put(new Category("Auto Service"));
+        categoryBox.put(new Category("Car Service"));
         categoryBox.put(new Category("Women's Beauty Salon"));
         categoryBox.put(new Category("Doctor"));
         categoryBox.put(new Category("Barber Shop"));
+
+        //CREATE SHARED PREFERENCES FOR ASSOCIATING EACH CATEGORY WITH A PHOTO
+        SharedPreferences pref = getSharedPreferences("Pref", 0);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("Car Service", R.drawable.car);
+        editor.putInt("Women's Beauty Salon", R.drawable.women_beauty);
+        editor.putInt("Doctor", R.drawable.doctors);
+        editor.putInt("Barber Shop", R.drawable.barbers);
+
+        editor.commit();
+
     }
 
 }

@@ -39,7 +39,7 @@ public class SendClientNotificationService extends Service {
     Timer timer;
     TimerTask timerTask;
     String TAG = "Timers";
-    int Your_X_SECS = 60;
+    int Your_X_SECS = 500;
     private Integer NOTIFICATION_UID = 10133;
     private List<Appointments> oldFutureAppointments;
     private Client client;

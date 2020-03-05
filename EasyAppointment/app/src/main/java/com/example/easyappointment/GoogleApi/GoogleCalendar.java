@@ -32,14 +32,14 @@ public class GoogleCalendar {
 
     public void getCalendarInfo() {
         // Projection array. Creating indices for this array instead of doing
-// dynamic lookups improves performance.
+        // dynamic lookups improves performance.
         final String[] EVENT_PROJECTION = new String[]{
                 CalendarContract.Calendars._ID,                           // 0
                 CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
                 CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
                 CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
         };
-// The indices for the projection array above.
+        // The indices for the projection array above.
         final int PROJECTION_ID_INDEX = 0;
         final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
         final int PROJECTION_DISPLAY_NAME_INDEX = 2;
@@ -53,7 +53,7 @@ public class GoogleCalendar {
             uri = CalendarContract.Calendars.CONTENT_URI;
         }
 
-// Submit the query and get a Cursor object back.
+        // Submit the query and get a Cursor object back.
         if (ActivityCompat.checkSelfPermission(host, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(host, new String[]{Manifest.permission.READ_CALENDAR}, MY_PERMISSION_READ_CALENDAR);
@@ -82,7 +82,6 @@ public class GoogleCalendar {
         if (ActivityCompat.checkSelfPermission(host, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(host, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSION_WRITE_CALENDAR);
         }
-        Log.d("Event", "permission");
         ContentResolver cr = host.getContentResolver();
 
         Calendar beginTime = Calendar.getInstance();
@@ -106,9 +105,6 @@ public class GoogleCalendar {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void createProviderCalendarEvent(Appointments appointment) {
-        if (ActivityCompat.checkSelfPermission(host, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(host, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSION_WRITE_CALENDAR);
-        }
         Log.d("Event", "permission");
         ContentResolver cr = host.getContentResolver();
 

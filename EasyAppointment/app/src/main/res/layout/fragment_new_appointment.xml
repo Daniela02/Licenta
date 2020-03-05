@@ -5,64 +5,62 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.ClientSpecific.NewAppointmentFragment">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose a date"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose a date"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:text="Available a periods of time"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Available a periods of time"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/timeTableSpinner"
                     android:layout_width="120dp"
                     android:layout_height="30dp" />
 
+                <Button
+                    android:id="@+id/book_appointment_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Book" />
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/book_appointment_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="10dp"
-                android:text="Book" />
-
         </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </FrameLayout>
