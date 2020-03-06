@@ -6,7 +6,7 @@
     android:layout_gravity="center_vertical|center_horizontal"
     tools:context=".Fragments.Common.SignOutFragment">
 
-    <Button
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_out"
         android:layout_width="140dp"
         android:layout_height="wrap_content"

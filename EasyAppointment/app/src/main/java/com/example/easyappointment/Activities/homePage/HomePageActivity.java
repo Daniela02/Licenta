@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -18,10 +19,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.easyappointment.Activities.login.LoginActivity;
 import com.example.easyappointment.R;
 import com.example.easyappointment.data.Models.ObjectBox;
 import com.example.easyappointment.data.Models.accounts.Account;
 import com.example.easyappointment.data.Models.accounts.Account_;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -39,7 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
     public Account account;
-    public boolean hasPermitionToWriteCalendar;
+    public boolean hasPermissionToWriteCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +52,13 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            hasPermitionToWriteCalendar = false;
+            hasPermissionToWriteCalendar = false;
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSION_WRITE_CALENDAR);
             }
         } else {
-            hasPermitionToWriteCalendar = true;
+            hasPermissionToWriteCalendar = true;
         }
 
         intent = getIntent();
@@ -86,6 +91,20 @@ public class HomePageActivity extends AppCompatActivity {
         ((TextView) (navigationView.getHeaderView(0).findViewById(R.id.nav_name))).setText(name);
         ImageView profilePicture = navigationView.getHeaderView(0).findViewById(R.id.nav_image_profile);
 
+        // Handle item selection
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        final GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        navigationView.setNavigationItemSelectedListener(v -> {
+            if (v.getItemId() == R.id.nav_signout) {
+                googleSignInClient.signOut().addOnCompleteListener(task -> signOut());
+            }
+            return true;
+        });
+
         if (account.imageURL != null) {
             Picasso.get().load(Uri.parse(account.imageURL)).into(profilePicture);
         }
@@ -95,9 +114,7 @@ public class HomePageActivity extends AppCompatActivity {
             clientSearch.hide();
             hideClientSpecificMenuItems();
             Navigation.setViewNavController(providerAddService, navController);
-            providerAddService.setOnClickListener(v -> {
-                navController.navigate(R.id.provider_add_service);
-            });
+            providerAddService.setOnClickListener(v -> navController.navigate(R.id.provider_add_service));
 
         } else {
             //CLIENT
@@ -105,9 +122,7 @@ public class HomePageActivity extends AppCompatActivity {
 
             hideProviderSpecificMenuItems();
             Navigation.setViewNavController(clientSearch, navController);
-            clientSearch.setOnClickListener(view -> {
-                navController.navigate(R.id.client_search);
-            });
+            clientSearch.setOnClickListener(view -> navController.navigate(R.id.client_search));
         }
     }
 
@@ -123,6 +138,7 @@ public class HomePageActivity extends AppCompatActivity {
         if (intent.hasExtra(NOTIFICATION) && intent.getStringExtra(NOTIFICATION).equals(getString(R.string.client).toLowerCase())) {
             navController.navigate(R.id.nav_future_appointments);
         }
+
         return true;
     }
 
@@ -133,18 +149,10 @@ public class HomePageActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSION_WRITE_CALENDAR: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    hasPermitionToWriteCalendar = true;
-                } else {
-                    hasPermitionToWriteCalendar = false;
-                }
-                return;
-            }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSION_WRITE_CALENDAR) {// If request is cancelled, the result arrays are empty.
+            hasPermissionToWriteCalendar = grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
     }
 
@@ -163,5 +171,11 @@ public class HomePageActivity extends AppCompatActivity {
         Menu nav_menu = navigationView.getMenu();
         nav_menu.findItem(R.id.nav_appointments).setVisible(false);
         nav_menu.findItem(R.id.nav_future_appointments).setVisible(false);
+    }
+
+    private void signOut() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

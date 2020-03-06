@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -14,10 +14,11 @@ import com.example.easyappointment.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 
 public class SignOutFragment extends Fragment {
     private static final String SIGN_OUT = "sign_out";
-    private Button signOut;
+    private SignInButton signOut;
 
     public SignOutFragment() {
         // Required empty public constructor
@@ -30,6 +31,9 @@ public class SignOutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_out,
                 container, false);
         signOut = view.findViewById(R.id.sign_out);
+
+        TextView textView = (TextView) signOut.getChildAt(0);
+        textView.setText("Sign out");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -49,7 +53,6 @@ public class SignOutFragment extends Fragment {
 
     private void signOut() {
         Intent intent = new Intent(this.getContext(), LoginActivity.class);
-        intent.putExtra(SIGN_OUT, "sign out");
         startActivity(intent);
         getActivity().finish();
     }

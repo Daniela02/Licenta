@@ -150,7 +150,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                         appointment.seenByClient = false;
                         appointmentsBox.put(appointment);
 
-                        if (host.hasPermitionToWriteCalendar) {
+                        if (host.hasPermissionToWriteCalendar) {
                             //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
                             GoogleCalendar googleCalendar = new GoogleCalendar(host);
                             googleCalendar.createProviderCalendarEvent(appointment);
@@ -188,7 +188,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
 
                     acceptButton.setVisibility(View.GONE);
 
-                    if (host.hasPermitionToWriteCalendar && appointment.status.equals(host.getString(R.string.accepted)) && appointment.seenByClient.equals(false)) {
+                    if (host.hasPermissionToWriteCalendar && appointment.status.equals(host.getString(R.string.accepted)) && appointment.seenByClient.equals(false)) {
                         //NEWLY ACCEPTED APPOINTMENT CREATES EVENT IN GOOGLE CALENDAR
                         GoogleCalendar googleCalendar = new GoogleCalendar(host);
                         googleCalendar.createClientCalendarEvent(appointment);
