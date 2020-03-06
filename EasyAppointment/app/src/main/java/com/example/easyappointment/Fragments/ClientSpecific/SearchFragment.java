@@ -99,7 +99,7 @@ public class SearchFragment extends Fragment {
                                 .build()
                                 .find());
 
-                        mAdapter = new ListServiceAdapter(serviceList, true, host);
+                        mAdapter = new ListServiceAdapter(serviceList, "search", host);
                     } else {
                         Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
 

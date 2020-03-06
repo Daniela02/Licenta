@@ -50,7 +50,7 @@ public class ServicesFragment extends Fragment {
                 .findFirst();
 
         List<Service> servicesList = provider.getServices();
-        mAdapter = new ListServiceAdapter(servicesList, false, host);
+        mAdapter = new ListServiceAdapter(servicesList, "provider", host);
         recyclerView.setAdapter(mAdapter);
         return view;
     }

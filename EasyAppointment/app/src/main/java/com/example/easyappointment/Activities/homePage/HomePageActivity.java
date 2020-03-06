@@ -101,6 +101,41 @@ public class HomePageActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(v -> {
             if (v.getItemId() == R.id.nav_signout) {
                 googleSignInClient.signOut().addOnCompleteListener(task -> signOut());
+            } else {
+                if (v.getItemId() == R.id.nav_appointments) {
+                    navController.navigate(R.id.nav_appointments);
+                    drawer.closeDrawer(navigationView);
+                } else {
+                    if (v.getItemId() == R.id.nav_change_category) {
+                        navController.navigate(R.id.nav_change_category);
+                        drawer.closeDrawer(navigationView);
+                    } else {
+                        if (v.getItemId() == R.id.nav_change_personal_details) {
+                            navController.navigate(R.id.nav_change_personal_details);
+                            drawer.closeDrawer(navigationView);
+                        } else {
+                            if (v.getItemId() == R.id.nav_change_schedule) {
+                                navController.navigate(R.id.nav_change_schedule);
+                                drawer.closeDrawer(navigationView);
+                            } else {
+                                if (v.getItemId() == R.id.nav_future_appointments) {
+                                    navController.navigate(R.id.nav_future_appointments);
+                                    drawer.closeDrawer(navigationView);
+                                } else {
+                                    if (v.getItemId() == R.id.nav_services) {
+                                        navController.navigate(R.id.nav_services);
+                                        drawer.closeDrawer(navigationView);
+                                    } else {
+                                        if (v.getItemId() == R.id.nav_pending_appointments) {
+                                            navController.navigate(R.id.nav_pending_appointments);
+                                            drawer.closeDrawer(navigationView);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             return true;
         });

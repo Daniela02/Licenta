@@ -21,16 +21,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Service Name"
-                android:layout_marginTop="5dp"
-                android:layout_weight="3"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/show_provider_name_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Provider Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="23dp" />
+
 
             <EditText
                 android:id="@+id/edit_service_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+
                 android:layout_weight="3"
                 android:text="Service Name"
                 android:textColor="@color/colorPrimary"
@@ -86,7 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-
                 android:text="Edit" />
 
             <Button
@@ -101,7 +107,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/submit" />
+                android:text="@string/submit"
+                android:visibility="gone" />
 
         </LinearLayout>
 

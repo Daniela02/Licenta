@@ -82,7 +82,7 @@ public class ProviderProfileFragment extends Fragment {
         HomePageActivity host = (HomePageActivity) getActivity();
 
         List<Service> servicesList = provider.getServices();
-        mAdapter = new ListServiceAdapter(servicesList, true, host);
+        mAdapter = new ListServiceAdapter(servicesList, "profile", host);
         recyclerView.setAdapter(mAdapter);
         return view;
     }
