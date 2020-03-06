@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,18 +39,16 @@ import io.objectbox.Box;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "AndroidClarified";
-    private static final String  SIGN_OUT = "sign_out";
     private static final String ACCOUNT_ID = "account_id";
     private static Account account;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent signOutIntent = getIntent();
-        String isSignOut = signOutIntent.getStringExtra(SIGN_OUT);
-        if(isSignOut == null) {
+        if (ObjectBox.get() == null) {
             ObjectBox.init(this);
         }
+
         setContentView(R.layout.activity_login);
 
         final GoogleSignInClient googleSignInClient;
@@ -87,19 +84,17 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case 101:
-                    try {
-                        // The Task returned from this call is always completed, no need to attach
-                        // a listener.
-                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                        GoogleSignInAccount account = task.getResult(ApiException.class);
-                        onLoggedIn(account);
-                    } catch (ApiException e) {
-                        // The ApiException status code indicates the detailed failure reason.
-                        Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-                    }
-                    break;
+            if (requestCode == 101) {
+                try {
+                    // The Task returned from this call is always completed, no need to attach
+                    // a listener.
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    onLoggedIn(account);
+                } catch (ApiException e) {
+                    // The ApiException status code indicates the detailed failure reason.
+                    Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+                }
             }
     }
 
@@ -163,10 +158,6 @@ public class LoginActivity extends AppCompatActivity {
             startService(clientNotificationServiceIntent);
             stopService(providerNotificationServiceIntent);
         }
-    }
-
-    public void closeApp(View view) {
-        finish();
     }
 
     public void categoriesInit() {

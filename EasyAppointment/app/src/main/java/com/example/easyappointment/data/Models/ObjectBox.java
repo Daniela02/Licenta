@@ -5,7 +5,7 @@ import android.content.Context;
 import io.objectbox.BoxStore;
 
 public class ObjectBox {
-    private static BoxStore boxStore;
+    private static BoxStore boxStore = null;
 
     public static void init (Context context) {
          boxStore = MyObjectBox.builder()
