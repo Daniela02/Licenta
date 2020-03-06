@@ -67,9 +67,8 @@
 
     <fragment
         android:id="@+id/client_search"
-        android:name="com.example.easyappointment.Fragments.ClientSpecific.SearchForProviderFragment"
-        android:label="Providers"
-        tools:layout="@layout/fragment_search_for_provider">
+        android:name="com.example.easyappointment.Fragments.ClientSpecific.SearchFragment"
+        tools:layout="@layout/fragment_search">
         <argument
             android:name="category_name"
             app:argType="string"
