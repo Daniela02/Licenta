@@ -145,7 +145,7 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
 
             if (frag.equals("provider")) {
                 providerName.setVisibility(View.GONE);
-                
+
                 deleteButton.setOnClickListener(v -> {
                     serviceLayout.setVisibility(View.GONE);
                     Provider_Service provider_service = service.provider_service.getTarget();

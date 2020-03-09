@@ -128,12 +128,8 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                     provider_service.appointments.remove(appointment);
 
                     appointmentsBox.remove(appointment);
-
-                    serviceName.setVisibility(View.GONE);
-                    providerOrClientName.setVisibility(View.GONE);
-                    startTime.setVisibility(View.GONE);
-                    cancelButton.setVisibility(View.GONE);
-                    status.setVisibility(View.GONE);
+                    
+                    appointmentLayout.setVisibility(View.GONE);
                 });
 
                 if (appointment.status.contains(host.getString(R.string.accepted))) {
@@ -179,11 +175,8 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                         Provider_Service provider_service = appointment.provider_service.getTarget();
                         provider_service.appointments.remove(appointment);
                         appointmentsBox.remove(appointment);
-                        serviceName.setVisibility(View.GONE);
-                        providerOrClientName.setVisibility(View.GONE);
-                        startTime.setVisibility(View.GONE);
-                        cancelButton.setVisibility(View.GONE);
-                        status.setVisibility(View.GONE);
+
+                        appointmentLayout.setVisibility(View.GONE);
                     });
 
                     acceptButton.setVisibility(View.GONE);
