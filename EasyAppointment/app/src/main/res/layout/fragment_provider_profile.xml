@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Provider Name"
+            android:layout_margin="10dp"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="25dp" />
 
@@ -32,6 +33,7 @@
             android:id="@+id/details_layout_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -74,7 +76,7 @@
             android:id="@+id/select_service_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_margin="5dp"
             android:text="Available Services"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="20dp" />

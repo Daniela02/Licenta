@@ -43,7 +43,7 @@ public class ProviderProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_provider_profile, container, false);
 
         Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
-        provider = providerBox.get(Long.parseLong(getArguments().getString("provider_id")));
+        provider = providerBox.get(Long.parseLong(getArguments().getString("profile_id")));
 
         String imageURL = provider.account.getTarget().imageURL;
         ImageView profilePicture = view.findViewById(R.id.provider_photo_profile);

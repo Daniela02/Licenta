@@ -72,7 +72,7 @@ public class ListProvidersAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
             Bundle bundle = new Bundle();
-            bundle.putString("provider_id", providerId.toString());
+            bundle.putString("profile_id", providerId.toString());
             navController.navigate(R.id.provider_profile, bundle);
         }
 

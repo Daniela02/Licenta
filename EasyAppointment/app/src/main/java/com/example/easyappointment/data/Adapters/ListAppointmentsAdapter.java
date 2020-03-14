@@ -75,6 +75,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
         private HomePageActivity host;
         private LinearLayout getDirections;
         private Long clientId;
+        private Long providerId;
 
         public ListViewHolder(@NonNull View itemView, List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory, HomePageActivity host) {
             super(itemView);
@@ -98,15 +99,21 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
             if (isProvider) {
                 NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
                 Bundle bundle = new Bundle();
-                bundle.putString("client_id", clientId.toString());
+                bundle.putString("profile_id", clientId.toString());
                 navController.navigate(R.id.client_profile, bundle);
+            } else {
+                NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
+                Bundle bundle = new Bundle();
+                bundle.putString("profile_id", providerId.toString());
+                navController.navigate(R.id.provider_profile, bundle);
             }
         }
 
         public void bindView(int poz) {
             Appointments appointment = appointmentsList.get(poz);
 
-            clientId = appointment.client.getTarget().client_id;
+            clientId = appointment.client.getTargetId();
+            providerId = appointment.provider_service.getTarget().provider.getTargetId();
 
             serviceName.setText(appointment.provider_service.getTarget().service.getTarget().name);
             providerOrClientName.setText(appointment.provider_service.getTarget().provider.getTarget().account.getTarget().name);

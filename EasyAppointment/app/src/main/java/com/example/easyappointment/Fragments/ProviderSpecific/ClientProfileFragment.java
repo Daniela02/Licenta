@@ -30,7 +30,7 @@ public class ClientProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client_profile, container, false);
         Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
-        client = clientBox.get(Long.parseLong(getArguments().getString("client_id")));
+        client = clientBox.get(Long.parseLong(getArguments().getString("profile_id")));
         String imageURL = client.account.getTarget().imageURL;
 
         ImageView profilePicture = view.findViewById(R.id.client_photo_profile);

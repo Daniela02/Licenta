@@ -136,39 +136,43 @@ public class NewAppointmentFragment extends Fragment {
         Button bookButton = view.findViewById(R.id.book_appointment_button);
 
         bookButton.setOnClickListener(v -> {
-            String hour = dropdownTimeTable.getSelectedItem().toString().split(":")[0];
-            String minute = dropdownTimeTable.getSelectedItem().toString().split(":")[1];
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(minute));
-            Date start_time = calendar.getTime();
-            calendar.setTimeInMillis(calendar.getTimeInMillis() + duration);
-            Date end_time = calendar.getTime();
-            Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
-            Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
+            if (dropdownTimeTable.getSelectedItem() == null || dropdownTimeTable.getSelectedItem().toString().equals("nothing")) {
+                Toast.makeText(this.getActivity(), "Invalid time table", Toast.LENGTH_SHORT).show();
+            } else {
+                String hour = dropdownTimeTable.getSelectedItem().toString().split(":")[0];
+                String minute = dropdownTimeTable.getSelectedItem().toString().split(":")[1];
+                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+                calendar.set(Calendar.MINUTE, Integer.parseInt(minute));
+                Date start_time = calendar.getTime();
+                calendar.setTimeInMillis(calendar.getTimeInMillis() + duration);
+                Date end_time = calendar.getTime();
+                Box<Appointments> appointmentsBox = ObjectBox.get().boxFor(Appointments.class);
+                Box<Client> clientBox = ObjectBox.get().boxFor(Client.class);
 
-            HomePageActivity host = (HomePageActivity) getActivity();
+                HomePageActivity host = (HomePageActivity) getActivity();
 
-            Client client = clientBox.query().equal(Client_.accountId, host.account.account_id).build().findFirst();
-            Provider_Service provider_service = service.provider_service.getTarget();
+                Client client = clientBox.query().equal(Client_.accountId, host.account.account_id).build().findFirst();
+                Provider_Service provider_service = service.provider_service.getTarget();
 
-            Appointments appointments = new Appointments();
-            appointmentsBox.attach(appointments);
-            appointments.setStart_time(start_time.toString());
-            appointments.setEnd_time(end_time.toString());
-            appointments.setStatus(getString(R.string.pending));
-            appointments.client.setTarget(client);
-            appointments.provider_service.setTarget(provider_service);
-            client.appointments.add(appointments);
-            provider_service.appointments.add(appointments);
+                Appointments appointments = new Appointments();
+                appointmentsBox.attach(appointments);
+                appointments.setStart_time(start_time.toString());
+                appointments.setEnd_time(end_time.toString());
+                appointments.setStatus(getString(R.string.pending));
+                appointments.client.setTarget(client);
+                appointments.provider_service.setTarget(provider_service);
+                client.appointments.add(appointments);
+                provider_service.appointments.add(appointments);
 
-            appointmentsBox.put(appointments);
-            clientBox.put(client);
-            ObjectBox.get().boxFor(Provider_Service.class).put(provider_service);
+                appointmentsBox.put(appointments);
+                clientBox.put(client);
+                ObjectBox.get().boxFor(Provider_Service.class).put(provider_service);
 
-            Toast.makeText(this.getActivity(), "Booked Appointment", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getActivity(), "Booked Appointment", Toast.LENGTH_SHORT).show();
 
-            NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
-            navController.navigate(R.id.nav_future_appointments);
+                NavController navController = Navigation.findNavController(host, R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_future_appointments);
+            }
         });
 
         return view;
