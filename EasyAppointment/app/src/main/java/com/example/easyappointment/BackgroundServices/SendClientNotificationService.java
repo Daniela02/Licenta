@@ -6,11 +6,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.example.easyappointment.Activities.homePage.HomePageActivity;
@@ -100,6 +102,7 @@ public class SendClientNotificationService extends Service {
 
     public void initializeTimerTask() {
         timerTask = new TimerTask() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             public void run() {
                 handler.post(() -> {
                     List<Appointments> appointmentsList = client.getAppointments()
@@ -114,6 +117,7 @@ public class SendClientNotificationService extends Service {
         };
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void createNotification() {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -142,7 +146,6 @@ public class SendClientNotificationService extends Service {
         assert mNotificationManager != null;
 
         Intent homePageIntent = new Intent(getApplicationContext(), HomePageActivity.class);
-        homePageIntent.putExtra(HomePageActivity.NAME, client.account.getTarget().name);
         homePageIntent.putExtra(HomePageActivity.EMAIL, client.account.getTarget().email);
         homePageIntent.putExtra(HomePageActivity.NOTIFICATION, getString(R.string.client).toLowerCase());
 

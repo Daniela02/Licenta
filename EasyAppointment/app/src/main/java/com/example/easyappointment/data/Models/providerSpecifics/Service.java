@@ -10,16 +10,16 @@ public class Service {
     @Id public Long id;
     public ToOne<Provider_Service> provider_service;
     public String name;
-    public String description;
+    public Double price;
     @Uid(6059980457444666489L)
     public Integer duration; //minutes
 
     public Service() {
     }
 
-    public Service(String name, String description, Integer duration) {
+    public Service(String name, Double price, Integer duration) {
         this.name = name;
-        this.description = description;
+        this.price = price;
         this.duration = duration;
     }
 
@@ -39,12 +39,12 @@ public class Service {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Integer getDuration() {
@@ -60,7 +60,7 @@ public class Service {
         return "Service{" +
                 "provider_service=" + provider_service +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
                 ", duration=" + duration +
                 '}';
     }

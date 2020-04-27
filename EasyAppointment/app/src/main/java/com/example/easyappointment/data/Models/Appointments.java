@@ -17,6 +17,7 @@ public class Appointments {
     public String end_time;
     public Boolean seenByProvider = false;
     public Boolean seenByClient = false;
+    public Boolean payed = false;
 
     public Appointments() {
     }
@@ -67,6 +68,14 @@ public class Appointments {
         this.end_time = end_time;
     }
 
+    public Double getPrice() {
+        Double price = provider_service.getTarget().service.getTarget().price;
+        if (price == null) {
+            return 0D;
+        }
+        return price;
+    }
+
     @Override
     public String toString() {
         return "Appointments{" +
@@ -77,6 +86,7 @@ public class Appointments {
                 ", end_time='" + end_time + '\'' +
                 ", seenByProvider='" + seenByProvider + '\'' +
                 ", seenByClient='" + seenByClient + '\'' +
+                ", payed='" + payed + '\'' +
                 '}';
     }
 }

@@ -35,12 +35,12 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/serviceDescriptionTextView"
+                android:id="@+id/servicePriceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/addServiceName"
                 android:layout_marginTop="5dp"
-                android:text="Service Description"
+                android:text="Service Price"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20dp" />
 
@@ -48,7 +48,7 @@
                 android:id="@+id/serviceDurationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/addServiceDescription"
+                android:layout_below="@id/addServicePrice"
                 android:layout_marginTop="5dp"
                 android:text="Service Duration"
                 android:textColor="@color/colorPrimary"
@@ -66,14 +66,14 @@
                 android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/addServiceDescription"
+                android:id="@+id/addServicePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/serviceDescriptionTextView"
+                android:layout_below="@id/servicePriceTextView"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Description"
-                android:inputType="textMultiLine" />
+                android:hint="Price"
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/addServiceDuration"

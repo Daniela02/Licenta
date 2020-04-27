@@ -149,13 +149,17 @@ public class CustomizeProviderActivity extends AppCompatActivity {
 
                     //SERVICE
                     String serviceName = ((EditText) findViewById(R.id.addServiceName)).getText().toString();
-                    String serviceDescription = ((EditText) findViewById(R.id.addServiceDescription)).getText().toString();
+                    Double servicePrice = Double.parseDouble(((EditText) findViewById(R.id.addServicePrice)).getText().toString());
                     Integer serviceDuration = Integer.parseInt(((EditText) findViewById(R.id.addServiceDuration)).getText().toString());
+
+                    if (servicePrice == null) {
+                        servicePrice = 0D;
+                    }
 
                     Box<Provider_Service> provider_serviceBox = ObjectBox.get().boxFor(Provider_Service.class);
                     Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
 
-                    Service service = new Service(serviceName, serviceDescription, serviceDuration);
+                    Service service = new Service(serviceName, servicePrice, serviceDuration);
                     serviceBox.attach(service);
                     Provider_Service provider_service = new Provider_Service();
                     provider_serviceBox.attach(provider_service);
@@ -194,7 +198,6 @@ public class CustomizeProviderActivity extends AppCompatActivity {
 
                     Intent homeIntent = new Intent(CustomizeProviderActivity.this, HomePageActivity.class);
                     homeIntent.putExtra(HomePageActivity.EMAIL, email);
-                    homeIntent.putExtra(HomePageActivity.NAME, name);
                     startActivity(homeIntent);
                     finish();
                     break;

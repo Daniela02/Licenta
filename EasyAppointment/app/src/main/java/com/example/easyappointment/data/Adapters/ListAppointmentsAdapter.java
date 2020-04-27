@@ -17,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.easyappointment.Activities.PayForAppointmentActivity;
 import com.example.easyappointment.Activities.homePage.HomePageActivity;
 import com.example.easyappointment.GoogleApi.GoogleCalendar;
 import com.example.easyappointment.R;
@@ -76,6 +77,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
         private LinearLayout getDirections;
         private Long clientId;
         private Long providerId;
+        private Button payButton;
 
         public ListViewHolder(@NonNull View itemView, List<Appointments> appointmentsList, Boolean isProvider, Boolean showHistory, HomePageActivity host) {
             super(itemView);
@@ -91,6 +93,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
             this.getDirections = itemView.findViewById(R.id.appointment_direction);
             this.host = host;
             this.appointmentLayout = itemView.findViewById(R.id.layout_appointment);
+            this.payButton = itemView.findViewById(R.id.google_pay_button);
             itemView.setOnClickListener(this::onClick);
         }
 
@@ -111,6 +114,12 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
 
         public void bindView(int poz) {
             Appointments appointment = appointmentsList.get(poz);
+
+            payButton.setOnClickListener(v -> {
+                Intent payIntent = new Intent(host, PayForAppointmentActivity.class);
+                payIntent.putExtra(PayForAppointmentActivity.APPOINTMENT_ID, appointment.appointments_id);
+                host.startActivity(payIntent);
+            });
 
             clientId = appointment.client.getTargetId();
             providerId = appointment.provider_service.getTarget().provider.getTargetId();
@@ -133,6 +142,7 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                 cancelButton.setOnClickListener(v -> {
                     Provider_Service provider_service = appointment.provider_service.getTarget();
                     provider_service.appointments.remove(appointment);
+                    appointmentLayout.setVisibility(View.GONE);
 
                     appointmentsBox.remove(appointment);
                     
@@ -143,11 +153,13 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                     //ACCEPTED APPOINTMENTS
                     acceptButton.setVisibility(View.GONE);
                     status.setVisibility(View.GONE);
+
                 } else {
                     //PENDING
                     status.setVisibility(View.VISIBLE);
                     acceptButton.setOnClickListener(v -> {
                         appointmentLayout.setVisibility(View.GONE);
+
                         appointment.setStatus(host.getString(R.string.accepted));
                         status.setText(appointment.status);
                         appointment.seenByClient = false;
@@ -198,6 +210,9 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                     status.setVisibility(View.GONE);
                     cancelButton.setVisibility(View.GONE);
                     acceptButton.setVisibility(View.GONE);
+                    if (appointment.payed == false) {
+                        payButton.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 appointment.seenByClient = true;

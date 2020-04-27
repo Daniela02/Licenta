@@ -29,13 +29,13 @@ import java.util.List;
 
 import io.objectbox.Box;
 
-public class SearchFragment extends Fragment {
+public class ShowProvidersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    public SearchFragment() {
+    public ShowProvidersFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +48,10 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         HomePageActivity host = (HomePageActivity) getActivity();
 
-        if (getArguments() != null) {
+        if (getArguments() != null && getArguments().containsKey("category_name")) {
             host.getSupportActionBar().setTitle("Providers");
             view.findViewById(R.id.searchBarEditText).setVisibility(View.GONE);
             view.findViewById(R.id.searchButton).setVisibility(View.GONE);
-
             String categoryName = getArguments().getString("category_name");
 
             Box<Provider> providerBox = ObjectBox.get().boxFor(Provider.class);
@@ -92,12 +91,6 @@ public class SearchFragment extends Fragment {
                                 .contains(Service_.name, searchedName)
                                 .build()
                                 .find();
-
-                        serviceList.addAll(serviceBox
-                                .query()
-                                .contains(Service_.description, searchedName)
-                                .build()
-                                .find());
 
                         mAdapter = new ListServiceAdapter(serviceList, "search", host);
                     } else {

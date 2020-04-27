@@ -118,11 +118,10 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
         else {
-            account = accountBox.query().equal(Account_.name, name).equal(Account_.email, email).build().findFirst();
+            account = accountBox.query().equal(Account_.email, email).build().findFirst();
             account.setImageURL(image);
             accountBox.put(account);
             Intent intent = new Intent(this, HomePageActivity.class);
-            intent.putExtra(HomePageActivity.NAME, name);
             intent.putExtra(HomePageActivity.EMAIL, email);
             startActivity(intent);
             finish();

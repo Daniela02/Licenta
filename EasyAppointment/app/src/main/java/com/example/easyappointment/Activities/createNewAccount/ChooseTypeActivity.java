@@ -56,7 +56,6 @@ public class ChooseTypeActivity extends AppCompatActivity {
             //home page
             Intent homeIntent = new Intent(ChooseTypeActivity.this, HomePageActivity.class);
             homeIntent.putExtra(HomePageActivity.EMAIL, email);
-            homeIntent.putExtra(HomePageActivity.NAME, name);
             startActivity(homeIntent);
             finish();
         });

@@ -37,7 +37,6 @@ import static com.example.easyappointment.GoogleApi.GoogleCalendar.MY_PERMISSION
 
 public class HomePageActivity extends AppCompatActivity {
 
-    public static final String NAME = "NAME";
     public static final String EMAIL = "EMAIL";
     public static final String NOTIFICATION = "NOTIFICATION";
     private Intent intent;
@@ -63,14 +62,15 @@ public class HomePageActivity extends AppCompatActivity {
 
         intent = getIntent();
         String email = intent.getStringExtra(EMAIL);
-        String name = intent.getStringExtra(NAME);
+
         Box<Account> accountBox = ObjectBox.get().boxFor(Account.class);
         account = accountBox
                 .query()
                 .equal(Account_.email, email)
-                .equal(Account_.name, name)
                 .build()
                 .findFirst();
+
+        String name = account.name;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

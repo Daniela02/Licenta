@@ -76,6 +76,14 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/google_pay_button"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:text="Pay"
+                android:visibility="gone" />
+
+
         </LinearLayout>
 
         <LinearLayout

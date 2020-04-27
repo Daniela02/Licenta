@@ -57,6 +57,7 @@ public class Account {
                 "email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 '}';
     }
 }

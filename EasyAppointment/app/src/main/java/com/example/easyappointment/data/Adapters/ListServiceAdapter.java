@@ -57,11 +57,11 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
     class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView serviceName;
-        private TextView serviceDescription;
+        private TextView servicePrice;
         private TextView serviceDuration;
         private TextView providerName;
         private EditText editServiceName;
-        private EditText editServiceDescription;
+        private EditText editServicePrice;
         private EditText editServiceDuration;
         private Button editButton;
         private Button deleteButton;
@@ -75,10 +75,10 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
         public ListViewHolder(@NonNull View itemView, List<Service> servicesList, String frag, HomePageActivity host) {
             super(itemView);
             serviceName = itemView.findViewById(R.id.show_service_name);
-            serviceDescription = itemView.findViewById(R.id.show_service_description);
+            servicePrice = itemView.findViewById(R.id.show_service_price);
             serviceDuration = itemView.findViewById(R.id.show_service_duration);
             editServiceName = itemView.findViewById(R.id.edit_service_name);
-            editServiceDescription = itemView.findViewById(R.id.edit_service_description);
+            editServicePrice = itemView.findViewById(R.id.edit_service_price);
             editServiceDuration = itemView.findViewById(R.id.edit_service_duration);
             editButton = itemView.findViewById(R.id.edit_service_button);
             deleteButton = itemView.findViewById(R.id.delete_service_button);
@@ -109,7 +109,10 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
             Service service = servicesList.get(poz);
             providerId = service.provider_service.getTarget().provider.getTargetId();
             serviceName.setText(service.name);
-            serviceDescription.setText(service.description);
+            if (service.price != null) {
+                servicePrice.setText(service.price + "RON");
+            }
+
             serviceDuration.setText(service.duration + " min");
             if (frag.equals("profile")) {
                 submitButton.setText("New");
@@ -153,7 +156,7 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
 
                     serviceDuration.setVisibility(View.GONE);
                     serviceName.setVisibility(View.GONE);
-                    serviceDescription.setVisibility(View.GONE);
+                    servicePrice.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.GONE);
                     editButton.setVisibility(View.GONE);
 
@@ -170,43 +173,48 @@ public class ListServiceAdapter extends RecyclerView.Adapter {
                 editButton.setOnClickListener(v -> {
                     serviceDuration.setVisibility(View.GONE);
                     serviceName.setVisibility(View.GONE);
-                    serviceDescription.setVisibility(View.GONE);
+                    servicePrice.setVisibility(View.GONE);
                     editButton.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.GONE);
 
                     editServiceName.setVisibility(View.VISIBLE);
-                    editServiceDescription.setVisibility(View.VISIBLE);
+                    editServicePrice.setVisibility(View.VISIBLE);
                     editServiceDuration.setVisibility(View.VISIBLE);
                     submitButton.setVisibility(View.VISIBLE);
 
                     editServiceName.setText(service.name);
-                    editServiceDescription.setText(service.description);
+                    if (service.price != null) {
+                        editServicePrice.setText(service.price.toString());
+                    }
                     editServiceDuration.setText(String.valueOf(service.duration));
                 });
 
                 submitButton.setOnClickListener(v -> {
                     String name = editServiceName.getText().toString();
-                    String description = editServiceDescription.getText().toString();
+                    Double price = Double.parseDouble(editServicePrice.getText().toString());
                     Integer duration = Integer.parseInt(editServiceDuration.getText().toString());
                     service.setName(name);
-                    service.setDescription(description);
+                    if (price == null) {
+                        price = 0D;
+                    }
+                    service.setPrice(price);
                     service.setDuration(duration);
                     Box<Service> serviceBox = ObjectBox.get().boxFor(Service.class);
                     serviceBox.put(service);
 
                     serviceDuration.setVisibility(View.VISIBLE);
                     serviceName.setVisibility(View.VISIBLE);
-                    serviceDescription.setVisibility(View.VISIBLE);
+                    servicePrice.setVisibility(View.VISIBLE);
                     editButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.VISIBLE);
 
                     editServiceName.setVisibility(View.GONE);
-                    editServiceDescription.setVisibility(View.GONE);
+                    editServicePrice.setVisibility(View.GONE);
                     editServiceDuration.setVisibility(View.GONE);
                     submitButton.setVisibility(View.GONE);
 
                     serviceName.setText(service.name);
-                    serviceDescription.setText(service.description);
+                    servicePrice.setText(service.price + "RON");
                     serviceDuration.setText(service.duration + " min");
                 });
             }

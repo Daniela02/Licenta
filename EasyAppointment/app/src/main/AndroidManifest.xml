@@ -18,14 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.PayForAppointmentActivity"></activity>
+
         <service
             android:name=".BackgroundServices.SendClientNotificationService"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.example.easyappointment.BackgroundServices.SendProviderNotificationService" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </service>
         <service
             android:name=".BackgroundServices.SendProviderNotificationService"
@@ -43,12 +45,16 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
 
         <activity
             android:name=".Activities.login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
