@@ -154,6 +154,11 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                     acceptButton.setVisibility(View.GONE);
                     status.setVisibility(View.GONE);
 
+                    if (appointment.payed == true) {
+                        status.setVisibility(View.VISIBLE);
+                        status.setText("Payed");
+                    }
+
                 } else {
                     //PENDING
                     status.setVisibility(View.VISIBLE);
@@ -207,11 +212,15 @@ public class ListAppointmentsAdapter extends RecyclerView.Adapter {
                         Toast.makeText(host, "Event created in Google Calendar", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    //History
                     status.setVisibility(View.GONE);
                     cancelButton.setVisibility(View.GONE);
                     acceptButton.setVisibility(View.GONE);
                     if (appointment.payed == false) {
                         payButton.setVisibility(View.VISIBLE);
+                    } else {
+                        status.setVisibility(View.VISIBLE);
+                        status.setText("Payed");
                     }
                 }
 
